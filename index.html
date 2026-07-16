@@ -1,1123 +1,660 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Container Logistics Inc - Premium Edition</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Terminal by SeWa & Sfera</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-        *{box-sizing:border-box}
-        body{margin:0;padding:0;font-family:'Inter','Segoe UI',sans-serif;height:100vh;display:flex;flex-direction:column;background:#05050a;color:white;overflow:hidden;user-select:none}
-        
-        .bg-layer{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(rgba(0,0,0,.85),rgba(0,0,0,.92)),url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1920');background-size:cover;background-position:center;z-index:-2;transition:opacity .5s}
-        .bg-particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;overflow:hidden;pointer-events:none}
-        .particle{position:absolute;width:4px;height:4px;background:rgba(156,39,176,.3);border-radius:50%;animation:floatParticle 15s infinite linear}
-        @keyframes floatParticle{0%{transform:translateY(100vh) rotate(0deg);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-100vh) rotate(720deg);opacity:0}}
-        .hidden{display:none!important}
+        /* ---------- общий сброс ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        .login-wrapper{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#0a0618 0%,#1a0a2e 30%,#0d1b3c 60%,#0a1628 100%);z-index:1000;overflow:hidden}
-        .login-wrapper::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(ellipse at 20% 20%,rgba(156,39,176,.15),transparent 50%),radial-gradient(ellipse at 80% 80%,rgba(33,150,243,.1),transparent 50%)}
-        
-        .logo-container{width:160px;height:160px;background:linear-gradient(145deg,#1a1a2e,#0d0d1a);border-radius:40px;display:flex;align-items:center;justify-content:center;margin-bottom:40px;box-shadow:0 25px 80px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.05);position:relative;z-index:1}
-        .logo-container::before{content:'';position:absolute;inset:-3px;border-radius:43px;background:linear-gradient(135deg,#9C27B0,#2196F3,#FFD700,#9C27B0);z-index:-1;opacity:.6;filter:blur(15px);animation:logoPulse 3s ease-in-out infinite}
-        .logo-container::after{content:'';position:absolute;inset:-2px;border-radius:42px;background:linear-gradient(135deg,#9C27B0,#2196F3);z-index:-1}
-        @keyframes logoPulse{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:.7;transform:scale(1.02)}}
-        .logo-text{font-size:56px;font-weight:900;background:linear-gradient(135deg,#E1BEE7,#CE93D8,#BA68C8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-        
-        .login-card{background:rgba(12,12,20,.85);padding:50px;border-radius:32px;width:380px;text-align:center;position:relative;z-index:1;box-shadow:0 30px 80px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.05);backdrop-filter:blur(30px)}
-        .login-card label{font-size:11px;color:#666;letter-spacing:1.5px;font-weight:700;text-transform:uppercase;display:block;text-align:left;margin-left:5%;margin-bottom:8px}
-        .login-card input{width:90%;padding:16px 20px;margin-bottom:25px;border-radius:16px;border:2px solid rgba(255,255,255,.06);text-align:center;font-size:16px;background:rgba(255,255,255,.03);color:white;transition:.3s;font-family:'Inter'}
-        .login-card input:focus{outline:none;border-color:rgba(156,39,176,.5);background:rgba(156,39,176,.05);box-shadow:0 0 30px rgba(156,39,176,.1)}
-        .login-error{color:#EF5350;font-size:13px;min-height:24px;margin-bottom:15px;font-weight:600}
-        .login-mode-toggle{color:#777;font-size:13px;margin-top:20px;cursor:pointer;transition:.3s;font-weight:500}
-        .login-mode-toggle:hover{color:#CE93D8}
-        
-        .btn{padding:16px 40px;border-radius:16px;border:none;font-size:16px;font-weight:700;cursor:pointer;transition:.3s;color:white;font-family:'Inter';letter-spacing:.5px}
-        .btn-green{background:linear-gradient(135deg,#4CAF50,#2E7D32);box-shadow:0 10px 30px rgba(76,175,80,.3)}
-        .btn-green:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(76,175,80,.4)}
-        .btn-purple{background:linear-gradient(135deg,#9C27B0,#6A1B9A);box-shadow:0 10px 30px rgba(156,39,176,.3)}
-        .btn-purple:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(156,39,176,.4)}
+        body {
+            background: #0d0f13;
+            color: #c8d0dc;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            padding: 0 20px 40px;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
 
-        #game-ui{display:none;width:100%;height:100%;flex-direction:column;position:relative;z-index:10}
-        
-        .header-stats{height:80px;display:flex;justify-content:space-between;align-items:center;padding:0 40px;background:linear-gradient(180deg,rgba(8,8,15,.98),rgba(8,8,15,.95));border-bottom:1px solid rgba(255,255,255,.04);box-shadow:0 4px 40px rgba(0,0,0,.5);flex-shrink:0;backdrop-filter:blur(20px)}
-        
-        .user-info{display:flex;align-items:center;gap:16px}
-        .user-avatar-mini{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#9C27B0,#7B1FA2);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;overflow:hidden}
-        .user-avatar-mini img{width:100%;height:100%;object-fit:cover}
-        .user-details{display:flex;flex-direction:column}
-        .user-name{font-size:17px;font-weight:700}
-        .user-meta{font-size:11px;color:#555;display:flex;gap:12px;margin-top:3px}
-        
-        .balance-box{display:flex;align-items:center;gap:25px}
-        .income-badge{background:linear-gradient(135deg,rgba(76,175,80,.15),rgba(76,175,80,.05));border:1px solid rgba(76,175,80,.25);padding:10px 18px;border-radius:14px;font-size:13px;color:#4CAF50;font-weight:700}
-        .balance-main{text-align:right}
-        .balance-amount{font-size:28px;font-weight:900;color:#CE93D8}
-        .balance-sub{font-size:10px;color:#444;margin-top:4px}
+        /* ---------- фон с шумом и пятнами ---------- */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(30, 70, 60, 0.25) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(10, 40, 30, 0.3) 0%, transparent 40%),
+                radial-gradient(circle at 50% 120%, rgba(0, 200, 150, 0.05) 0%, transparent 30%);
+            z-index: 0;
+            pointer-events: none;
+        }
 
-        .nav-tabs{display:flex;justify-content:center;gap:10px;padding:15px 25px;flex-shrink:0;background:rgba(8,8,15,.8);border-bottom:1px solid rgba(255,255,255,.03)}
-        .nav-btn{background:rgba(255,255,255,.02);padding:12px 32px;border-radius:14px;cursor:pointer;transition:.3s;border:1px solid rgba(255,255,255,.04);color:#555;font-size:14px;font-weight:600}
-        .nav-btn:hover{background:rgba(255,255,255,.05);color:#999}
-        .nav-btn.active{background:linear-gradient(135deg,rgba(156,39,176,.2),rgba(156,39,176,.08));color:#CE93D8;border-color:rgba(156,39,176,.4)}
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 0;
+        }
 
-        .tab-content{flex:1;display:none;flex-direction:column;align-items:center;overflow-y:auto;padding-bottom:40px;width:100%}
-        .tab-content.active{display:flex!important}
-        .tab-content::-webkit-scrollbar{width:6px}
-        .tab-content::-webkit-scrollbar-thumb{background:rgba(156,39,176,.3);border-radius:3px}
+        /* ---------- обёртка ---------- */
+        .wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
 
-        /* АУКЦІОН */
-        .roulette-section{display:flex;flex-direction:column;align-items:center;margin:25px 0 20px 0;width:100%}
-        .roulette-frame{position:relative;width:940px}
-        .roulette-pointer{position:absolute;top:-5px;left:50%;transform:translateX(-50%);z-index:30;filter:drop-shadow(0 6px 20px rgba(156,39,176,.6))}
-        .roulette-viewport{width:940px;height:270px;background:linear-gradient(180deg,#08080f,#0f0f18 50%,#08080f);border:2px solid rgba(255,255,255,.05);border-radius:24px;position:relative;overflow:hidden;box-shadow:inset 0 0 120px rgba(0,0,0,.9)}
-        .roulette-viewport::before,.roulette-viewport::after{content:'';position:absolute;top:0;bottom:0;width:160px;z-index:15;pointer-events:none}
-        .roulette-viewport::before{left:0;background:linear-gradient(to right,#08080f,transparent)}
-        .roulette-viewport::after{right:0;background:linear-gradient(to left,#08080f,transparent)}
-        .roulette-center-line{position:absolute;left:50%;top:0;bottom:0;width:3px;background:linear-gradient(180deg,transparent,rgba(156,39,176,.6) 20%,rgba(156,39,176,.6) 80%,transparent);z-index:12;transform:translateX(-50%)}
-        .roulette-track{display:flex;height:100%;align-items:center;position:absolute;left:0;will-change:transform}
+        /* ---------- шапка ---------- */
+        .header {
+            padding: 50px 0 20px;
+            text-align: left;
+        }
 
-        .car-card{width:180px;height:220px;margin:0 6px;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;flex-shrink:0;padding:14px;position:relative;overflow:hidden}
-        .car-card.rarity-yellow{background:linear-gradient(180deg,#1e1c14,#14130e);border:2px solid rgba(255,215,0,.2)}
-        .car-card.rarity-green{background:linear-gradient(180deg,#141e14,#0e140e);border:2px solid rgba(76,175,80,.2)}
-        .car-card.rarity-blue{background:linear-gradient(180deg,#14141e,#0e0e1a);border:2px solid rgba(33,150,243,.2)}
-        .car-card.rarity-red{background:linear-gradient(180deg,#1e1414,#1a0e0e);border:2px solid rgba(244,67,54,.2)}
-        .car-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
-        .car-card.rarity-yellow::before{background:linear-gradient(to right,transparent,#FFD700,transparent)}
-        .car-card.rarity-green::before{background:linear-gradient(to right,transparent,#4CAF50,transparent)}
-        .car-card.rarity-blue::before{background:linear-gradient(to right,transparent,#2196F3,transparent)}
-        .car-card.rarity-red::before{background:linear-gradient(to right,transparent,#F44336,transparent)}
-        .car-card img{width:100%;height:115px;object-fit:cover;border-radius:12px;background:#000}
-        .car-name{font-size:13px;font-weight:600;margin-top:8px;color:#bbb;text-align:center}
-        .car-rarity-label{font-size:9px;text-transform:uppercase;letter-spacing:2px;font-weight:800}
-        .car-rarity-label.yellow{color:#FFD700}.car-rarity-label.green{color:#4CAF50}.car-rarity-label.blue{color:#2196F3}.car-rarity-label.red{color:#F44336}
-        .car-price{font-size:16px;font-weight:800}
-        .car-price.yellow{color:#FFD700}.car-price.green{color:#4CAF50}.car-price.blue{color:#2196F3}.car-price.red{color:#F44336}
-        @keyframes winPulse{0%,100%{box-shadow:0 0 0 rgba(156,39,176,0)}50%{box-shadow:0 0 60px rgba(156,39,176,.5)}}
-        @keyframes winScale{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
-        .car-card.winner{animation:winPulse 1s ease infinite,winScale 1s ease infinite;z-index:20}
-        
-        #win-message{font-size:22px;font-weight:800;height:40px;margin-top:18px;text-align:center}
-        @keyframes winText{0%{opacity:0;transform:translateY(15px) scale(.9)}100%{opacity:1;transform:translateY(0) scale(1)}}
-        .win-animated{animation:winText .5s ease forwards}
+        .logo-line {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 10px 20px;
+        }
 
-        .container-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:920px;padding:0 25px}
-        .container-item{background:linear-gradient(145deg,rgba(20,20,28,.9),rgba(15,15,22,.9));padding:25px 18px;border-radius:20px;text-align:center;cursor:pointer;transition:.4s;position:relative;border:1px solid rgba(255,255,255,.04)}
-        .container-item:hover{transform:translateY(-8px);border-color:rgba(156,39,176,.2);box-shadow:0 20px 50px rgba(0,0,0,.4)}
-        .container-item .c-icon{font-size:50px;margin-bottom:12px}
-        .container-item .c-tier{font-size:14px;font-weight:800;letter-spacing:2px}
-        .container-price{font-size:18px;font-weight:800;color:#CE93D8;margin-top:10px}
-        .locked-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);border-radius:20px;backdrop-filter:blur(4px);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#888;font-size:12px;gap:6px;font-weight:600;text-align:center;padding:15px}
+        .logo {
+            font-size: 4rem;
+            font-weight: 700;
+            letter-spacing: -2px;
+            color: #d4e6e0;
+            background: linear-gradient(135deg, #d4e6e0 0%, #7bb8a8 70%, #5f9b8a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
 
-        /* ПРОФІЛЬ */
-        #tab-profile{background:linear-gradient(180deg,#05050a,#08080f);padding-top:30px}
-        .profile-hero{width:100%;max-width:700px;position:relative;margin-bottom:30px}
-        .profile-hero-bg{position:absolute;top:0;left:0;right:0;height:180px;background:linear-gradient(135deg,#1a0a2e,#0d1b3c);border-radius:28px 28px 0 0;overflow:hidden}
-        .profile-hero-bg::after{content:'';position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(transparent,rgba(5,5,10,.95))}
-        .profile-hero-content{position:relative;padding:60px 40px 30px;text-align:center}
-        
-        .profile-avatar-wrapper{position:relative;width:140px;height:140px;margin:0 auto 20px}
-        .profile-avatar-ring{position:absolute;inset:-8px;border-radius:50%;background:conic-gradient(from 0deg,#9C27B0,#E91E63,#FF5722,#FFC107,#4CAF50,#2196F3,#9C27B0);animation:avatarRing 4s linear infinite;opacity:.6}
-        @keyframes avatarRing{to{transform:rotate(360deg)}}
-        .profile-avatar-ring-inner{position:absolute;inset:-4px;border-radius:50%;background:#0a0a12}
-        .profile-avatar{width:140px;height:140px;border-radius:50%;background:linear-gradient(145deg,#1a1a2e,#0f0f1a);display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;position:relative}
-        .profile-avatar img{width:100%;height:100%;object-fit:cover}
-        .profile-avatar-placeholder{color:rgba(255,255,255,.3);font-size:12px;text-align:center;font-weight:600}
-        .profile-avatar-edit{position:absolute;bottom:5px;right:5px;width:36px;height:36px;background:linear-gradient(135deg,#9C27B0,#7B1FA2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;z-index:5;border:3px solid #0a0a12}
-        .profile-level-badge{position:absolute;top:0;right:0;background:linear-gradient(135deg,#FFD700,#FFA000);color:#000;font-size:12px;font-weight:900;padding:6px 12px;border-radius:20px;z-index:5}
-        
-        .profile-name{font-size:32px;font-weight:900;margin-bottom:8px;color:#fff}
-        .profile-title{font-size:13px;color:#666;letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:20px}
-        
-        .profile-level-section{background:rgba(15,15,25,.8);border-radius:20px;padding:20px 30px;border:1px solid rgba(255,255,255,.04);margin:0 20px}
-        .profile-level-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-        .profile-level-text{font-size:20px;font-weight:800;color:#FFD700}
-        .profile-level-xp{font-size:13px;color:#666;font-weight:600}
-        .profile-level-bar{height:12px;background:rgba(255,255,255,.05);border-radius:6px;overflow:hidden}
-        .profile-level-fill{height:100%;background:linear-gradient(90deg,#c9d060,#a0b030);border-radius:6px;transition:width .8s ease}
+        .logo-sub {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: #7f96a8;
+            letter-spacing: 3px;
+            border-left: 2px solid #3f6b5c;
+            padding-left: 18px;
+            opacity: 0.8;
+        }
 
-        .daily-card{width:100%;max-width:700px;background:linear-gradient(145deg,rgba(18,18,28,.9),rgba(12,12,20,.9));border:1px solid rgba(255,255,255,.05);border-radius:24px;padding:30px;margin-bottom:25px}
-        .daily-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#FFD700,#FFA000)}
-        .daily-header{display:flex;align-items:center;gap:15px;margin-bottom:20px}
-        .daily-icon{width:50px;height:50px;background:linear-gradient(135deg,#FFD700,#FFA000);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px}
-        .daily-title{font-size:18px;font-weight:800;color:#FFD700}
-        .daily-subtitle{font-size:12px;color:#666;margin-top:2px}
-        
-        .daily-days{display:flex;gap:10px;justify-content:center;margin-bottom:25px;flex-wrap:wrap}
-        .daily-day{width:75px;height:85px;border-radius:16px;background:rgba(255,255,255,.02);border:2px solid rgba(255,255,255,.05);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:.3s}
-        .daily-day-num{font-size:10px;font-weight:800;color:#555;letter-spacing:1px;margin-bottom:4px}
-        .daily-day-icon{font-size:24px;margin-bottom:2px}
-        .daily-day-amount{font-size:11px;font-weight:700;color:#666}
-        .daily-day.claimed{background:rgba(76,175,80,.1);border-color:rgba(76,175,80,.3)}
-        .daily-day.claimed .daily-day-num{color:#4CAF50}
-        .daily-day.current{background:linear-gradient(145deg,rgba(255,215,0,.1),rgba(255,170,0,.05));border-color:rgba(255,215,0,.4);transform:scale(1.05)}
-        .daily-day.current .daily-day-num,.daily-day.current .daily-day-amount{color:#FFD700}
-        .daily-day.locked{opacity:.3}
-        
-        .daily-btn{padding:14px 50px;border-radius:16px;border:none;font-size:16px;font-weight:800;cursor:pointer;transition:.3s;font-family:'Inter'}
-        .daily-btn.available{background:linear-gradient(135deg,#FFD700,#FFA000);color:#000}
-        .daily-btn.available:hover{transform:translateY(-3px)}
-        .daily-btn.claimed-btn{background:rgba(255,255,255,.03);color:#444;cursor:not-allowed}
+        .tagline {
+            margin-top: 12px;
+            font-size: 1.2rem;
+            color: #a0b8c6;
+            max-width: 640px;
+            background: rgba(20, 30, 28, 0.3);
+            padding: 14px 24px;
+            border-radius: 40px 12px 40px 12px;
+            border: 1px solid #2a3d36;
+            backdrop-filter: blur(4px);
+        }
 
-        .time-card{width:100%;max-width:700px;background:linear-gradient(145deg,rgba(18,18,28,.9),rgba(12,12,20,.9));border:1px solid rgba(255,255,255,.05);border-radius:24px;padding:25px 35px;margin-bottom:25px;display:flex;justify-content:space-between;align-items:center}
-        .time-main{display:flex;align-items:center;gap:18px}
-        .time-icon{width:55px;height:55px;background:linear-gradient(135deg,rgba(66,165,245,.2),rgba(66,165,245,.05));border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px}
-        .time-label{font-size:11px;color:#666;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
-        .time-value{font-size:32px;font-weight:900;color:#42A5F5}
-        .time-session{text-align:right}
-        .time-session-label{font-size:10px;color:#555;margin-bottom:2px}
-        .time-session-value{font-size:18px;font-weight:700;color:#64B5F6}
+        /* ---------- описание ---------- */
+        .hero-text {
+            margin: 40px 0 50px;
+            padding: 28px 32px;
+            background: rgba(12, 20, 22, 0.45);
+            border-radius: 32px 8px 32px 8px;
+            border-left: 4px solid #4d7b6b;
+            backdrop-filter: blur(6px);
+        }
 
-        .stats-section{width:100%;max-width:700px;margin-bottom:25px}
-        .stats-header{font-size:12px;color:#555;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:15px;margin-left:5px}
-        .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
-        .stat-card{background:linear-gradient(145deg,rgba(18,18,28,.9),rgba(12,12,20,.9));border:1px solid rgba(255,255,255,.04);border-radius:20px;padding:22px;text-align:center}
-        .stat-icon{font-size:28px;margin-bottom:10px}
-        .stat-value{font-size:24px;font-weight:900;margin-bottom:4px}
-        .stat-label{font-size:11px;color:#555;font-weight:600;text-transform:uppercase}
-        .stat-card.gold .stat-value{color:#FFD700}
-        .stat-card.green .stat-value{color:#4CAF50}
-        .stat-card.blue .stat-value{color:#42A5F5}
-        .stat-card.purple .stat-value{color:#CE93D8}
+        .hero-text p {
+            font-size: 1.1rem;
+            color: #c2d0da;
+            margin-bottom: 12px;
+        }
 
-        .settings-btn-new{background:linear-gradient(145deg,rgba(25,25,35,.9),rgba(18,18,28,.9));border:1px solid rgba(255,255,255,.06);color:#888;padding:16px 45px;border-radius:18px;font-size:15px;cursor:pointer;transition:.3s;display:flex;align-items:center;gap:12px;font-weight:600;font-family:'Inter';margin-top:10px}
-        .settings-btn-new:hover{background:rgba(35,35,50,.9);color:#bbb;border-color:rgba(156,39,176,.3)}
+        .hero-text small {
+            color: #7d9a8e;
+            font-size: 0.9rem;
+        }
 
-        /* МІСТО ТА БУДІВНИЦТВО */
-        #tab-city{background:#040408;padding:0;overflow:hidden;position:relative}
-        .city-hud{position:absolute;top:0;left:0;right:0;z-index:100;background:linear-gradient(180deg,rgba(4,4,8,.98),rgba(4,4,8,.85) 60%,transparent);padding:18px 30px 45px;display:flex;justify-content:space-between;align-items:flex-start;pointer-events:none}
-        .city-hud>*{pointer-events:auto}
-        .city-hud-left h2{margin:0;font-size:24px;font-weight:900}
-        .city-hud-left h2 span{color:#FFD700}
-        .city-hud-left p{margin:5px 0 0;font-size:12px;color:#555}
-        .city-hud-right{display:flex;gap:12px}
-        .city-hud-stat{background:rgba(255,255,255,.04);padding:12px 18px;border-radius:14px;text-align:center;min-width:85px}
-        .city-hud-stat-label{font-size:9px;color:#555;font-weight:700;letter-spacing:1px}
-        .city-hud-stat-value{font-size:18px;font-weight:900;margin-top:4px}
-        .city-hud-stat-value.pop{color:#42A5F5}
-        .city-hud-stat-value.happy{color:#FFD700}
-        .city-hud-stat-value.tax{color:#4CAF50}
+        /* ---------- карточки фич ---------- */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 22px;
+            margin-bottom: 50px;
+        }
 
-        .city-map-wrapper{width:100%;height:100%;overflow:auto;cursor:grab;position:relative}
-        .city-map-wrapper:active{cursor:grabbing}
-        .city-map{width:2400px;height:2400px;position:relative;background:linear-gradient(135deg,#1a3d12,#2a5a1a)}
-        .city-map.placing{cursor:crosshair!important}
+        .fcard {
+            background: rgba(16, 24, 28, 0.5);
+            backdrop-filter: blur(8px);
+            border-radius: 24px 8px 24px 8px;
+            padding: 26px 20px 22px;
+            border: 1px solid #263a33;
+            transition: all 0.25s ease;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
 
-        .road-h{position:absolute;background:#2a2a2a;border-top:1px dashed rgba(255,200,0,.3);border-bottom:1px dashed rgba(255,200,0,.3)}
-        .road-v{position:absolute;background:#2a2a2a;border-left:1px dashed rgba(255,200,0,.3);border-right:1px dashed rgba(255,200,0,.3)}
+        .fcard:hover {
+            background: rgba(22, 34, 38, 0.7);
+            border-color: #4a7a69;
+            transform: translateY(-5px) scale(1.01);
+        }
 
-        .building{position:absolute;border-radius:10px;cursor:pointer;transition:transform .3s;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 6px 25px rgba(0,0,0,.5);pointer-events:auto}
-        .building:hover{transform:scale(1.12);z-index:50}
-        .building-icon{font-size:26px}
-        .building-name{font-size:8px;color:rgba(255,255,255,.9);text-align:center;margin-top:2px;font-weight:700;max-width:92%}
-        .building-level-badge{position:absolute;bottom:3px;right:3px;background:rgba(0,0,0,.8);color:#FFD700;font-size:8px;padding:2px 5px;border-radius:4px;font-weight:800}
-        .building-income-float{position:absolute;top:-5px;left:50%;transform:translateX(-50%);color:#4CAF50;font-size:9px;font-weight:900;animation:floatUp 2.5s ease-in-out infinite}
-        @keyframes floatUp{0%,100%{opacity:.4;transform:translateX(-50%) translateY(0)}50%{opacity:1;transform:translateX(-50%) translateY(-12px)}}
+        .fcard .icon {
+            font-size: 2.4rem;
+            display: block;
+            margin-bottom: 8px;
+            opacity: 0.8;
+        }
 
-        /* Типи будівель (кольори) */
-        .b-residential{background:linear-gradient(180deg,#3F51B5,#303F9F);border:2px solid rgba(63,81,181,.4)}
-        .b-commercial{background:linear-gradient(180deg,#E64A19,#BF360C);border:2px solid rgba(230,74,25,.4)}
-        .b-industrial{background:linear-gradient(180deg,#546E7A,#37474F);border:2px solid rgba(84,110,122,.4)}
-        .b-entertainment{background:linear-gradient(180deg,#8E24AA,#6A1B9A);border:2px solid rgba(142,36,170,.4)}
-        .b-government{background:linear-gradient(180deg,#00897B,#00695C);border:2px solid rgba(0,137,123,.4)}
-        .b-special{background:linear-gradient(180deg,#F57C00,#E65100);border:2px solid rgba(245,124,0,.4)}
-        .b-education{background:linear-gradient(180deg,#1E88E5,#1565C0);border:2px solid rgba(30,136,229,.4)}
-        .b-medical{background:linear-gradient(180deg,#E53935,#C62828);border:2px solid rgba(229,57,53,.4)}
-        .b-office{background:linear-gradient(180deg,#5C6BC0,#3949AB);border:2px solid rgba(92,107,192,.4)}
-        .b-business{background:linear-gradient(180deg,#FFB300,#FF8F00);border:2px solid rgba(255,179,0,.4)}
+        .fcard h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #dce8ee;
+            margin-bottom: 4px;
+        }
 
-        /* Модалка Меню Будівництва */
-        .build-catalog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
-        .build-catalog-card{background:rgba(18,18,28,.9);border:1px solid rgba(255,255,255,.04);border-radius:18px;padding:20px;text-align:center;transition:.3s;position:relative}
-        .build-catalog-card:hover{border-color:rgba(255,255,255,.1);transform:translateY(-3px)}
-        .build-catalog-card.locked{opacity:.4}
-        .bc-icon{font-size:35px;margin-bottom:10px}
-        .bc-name{font-size:16px;font-weight:800;margin-bottom:4px}
-        .bc-desc{font-size:11px;color:#666;margin-bottom:12px;min-height:26px}
-        .bc-stats{background:rgba(0,0,0,.3);border-radius:12px;padding:10px;margin-bottom:12px}
-        .bc-stat{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px}
-        .bc-stat:last-child{margin-bottom:0}
-        .bc-stat-label{color:#555}
-        .bc-stat-value{color:#4CAF50;font-weight:700}
-        .bc-buy-btn{width:100%;padding:12px;border-radius:12px;border:none;font-size:14px;font-weight:800;cursor:pointer;background:linear-gradient(135deg,#9C27B0,#7B1FA2);color:white;transition:.3s}
-        .bc-buy-btn:hover:not(:disabled){transform:translateY(-2px)}
-        .bc-buy-btn:disabled{background:rgba(255,255,255,.03);color:#444;cursor:not-allowed}
-        .bc-lvl-badge{position:absolute;top:10px;left:10px;background:rgba(156,39,176,.15);color:#CE93D8;padding:4px 8px;border-radius:8px;font-size:10px;font-weight:800}
+        .fcard p {
+            font-size: 0.9rem;
+            color: #9bafbc;
+            line-height: 1.5;
+        }
 
-        /* Привид при будівництві */
-        .ghost-building{position:absolute;pointer-events:none;z-index:900;opacity:0.6;border:2px solid #4CAF50;background:rgba(76,175,80,.2);border-radius:10px;display:none;align-items:center;justify-content:center}
-        
-        /* Модалка Будівлі (BM) */
-        .bm-header{padding:25px;display:flex;align-items:center;gap:20px;border-bottom:1px solid rgba(255,255,255,.04)}
-        .bm-header-icon{width:68px;height:68px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:36px}
-        .bm-header-name{font-size:22px;font-weight:900}
-        .bm-header-type{font-size:12px;color:#666;margin-top:3px}
-        .bm-body{padding:22px 25px}
-        .bm-desc{font-size:13px;color:#888;margin-bottom:22px}
-        .bm-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:22px}
-        .bm-stat{background:rgba(255,255,255,.02);padding:14px;border-radius:14px;text-align:center}
-        .bm-stat-label{font-size:9px;color:#555;text-transform:uppercase;letter-spacing:1.5px;font-weight:700}
-        .bm-stat-value{font-size:18px;font-weight:900;margin-top:5px}
-        .bm-actions{display:flex;flex-direction:column;gap:10px}
-        .bm-action-btn{width:100%;padding:15px 20px;border-radius:14px;border:none;font-size:15px;font-weight:800;cursor:pointer;transition:.3s;display:flex;justify-content:space-between;align-items:center;font-family:'Inter'}
-        .bm-action-btn:hover:not(:disabled){transform:scale(1.02)}
-        .bm-action-btn:disabled{opacity:.3;cursor:not-allowed}
-        .bm-action-btn.upgrade{background:linear-gradient(135deg,#9C27B0,#6A1B9A);color:white}
-        .bm-action-btn.sell{background:rgba(244,67,54,.08);color:#EF5350;border:1px solid rgba(244,67,54,.12)}
-        .bm-action-btn.collect{background:linear-gradient(135deg,#2196F3,#1565C0);color:white}
-        .bm-action-price{font-size:14px}
-        .bm-action-left{display:flex;align-items:center;gap:10px}
-        
-        .modal-upgrade-btn{width:100%;padding:14px 18px;border-radius:14px;border:1px solid rgba(255,255,255,.04);background:rgba(255,255,255,.02);color:white;font-size:14px;cursor:pointer;transition:.3s;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
-        .modal-upgrade-btn:hover:not(:disabled){background:rgba(76,175,80,.08);border-color:rgba(76,175,80,.2)}
-        .modal-upgrade-btn:disabled{opacity:.3;cursor:not-allowed}
-        .upgrade-label{display:flex;align-items:center;gap:10px;font-weight:600}
-        .upgrade-price{color:#4CAF50;font-weight:800}
+        /* ---------- блок загрузки ---------- */
+        .download-area {
+            background: rgba(14, 24, 26, 0.5);
+            backdrop-filter: blur(8px);
+            border-radius: 40px 12px 40px 12px;
+            padding: 36px 30px;
+            margin: 30px 0 50px;
+            border: 1px solid #2d4a3f;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-        /* Modal базові стилі */
-        .modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.9);z-index:9998;display:none;justify-content:center;align-items:center;backdrop-filter:blur(15px)}
-        .modal-overlay.open{display:flex!important}
-        .modal-panel{background:#0c0c14;width:650px;max-height:90vh;border-radius:28px;border:1px solid rgba(255,255,255,.05);overflow-y:auto;box-shadow:0 40px 100px rgba(0,0,0,.7);animation:slideIn .4s ease;position:relative}
-        @keyframes slideIn{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
-        .modal-close{position:absolute;top:16px;right:16px;width:38px;height:38px;background:rgba(255,255,255,.06);border:none;border-radius:12px;color:#888;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10}
-        .modal-close:hover{background:#EF5350;color:white}
-        .build-tabs{display:flex;gap:10px;padding:20px;background:rgba(255,255,255,.02);border-bottom:1px solid rgba(255,255,255,.05);overflow-x:auto}
-        .build-tab-btn{padding:10px 20px;border-radius:12px;background:rgba(255,255,255,.03);color:#888;border:none;cursor:pointer;font-weight:700;white-space:nowrap}
-        .build-tab-btn.active{background:#9C27B0;color:white}
-        
-        /* Settings & Dev */
-        .settings-overlay, .dev-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.9);z-index:9999;display:none;justify-content:center;align-items:center;backdrop-filter:blur(15px)}
-        .settings-overlay.open, .dev-overlay.open{display:flex!important}
-        .settings-panel{background:#0c0c14;width:480px;max-height:85vh;border-radius:28px;border:1px solid rgba(255,255,255,.05);display:flex;flex-direction:column;overflow:hidden;position:relative}
-        .settings-header{display:flex;justify-content:space-between;align-items:center;padding:25px 30px;border-bottom:1px solid rgba(255,255,255,.04)}
-        .settings-header h2{margin:0;font-size:22px;font-weight:900}
-        .settings-body{padding:25px 30px;overflow-y:auto;flex:1}
-        .settings-section{margin-bottom:28px}
-        .settings-section-title{font-size:11px;color:#555;text-transform:uppercase;letter-spacing:2px;margin-bottom:14px;font-weight:800}
-        .settings-row{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;background:rgba(255,255,255,.02);border-radius:14px;margin-bottom:8px}
-        .settings-row-label{font-size:15px;color:#ccc;font-weight:600}
-        .toggle-switch{position:relative;width:50px;height:28px;background:rgba(255,255,255,.1);border-radius:14px;cursor:pointer;transition:.3s}
-        .toggle-switch.active{background:#9C27B0}
-        .toggle-switch::after{content:'';position:absolute;top:3px;left:3px;width:22px;height:22px;background:white;border-radius:50%;transition:.3s}
-        .toggle-switch.active::after{left:25px}
-        .settings-action-btn{width:100%;padding:14px;border-radius:14px;border:none;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:8px;font-family:'Inter'}
-        .btn-reset{background:rgba(244,67,54,.08);color:#EF5350;border:1px solid rgba(244,67,54,.12)}
-        .btn-logout-s{background:rgba(255,255,255,.03);color:#888;border:1px solid rgba(255,255,255,.05)}
-        .dev-mode-trigger{margin-top:30px;padding-top:22px;border-top:1px solid rgba(255,255,255,.03);text-align:center}
-        .dev-mode-btn{background:none;border:none;color:#222;font-size:10px;cursor:pointer;font-family:'Inter'}
+        .download-area .info h2 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: #d4e6e0;
+            letter-spacing: -0.3px;
+        }
 
-        .dev-password-card{background:#0a0a10;padding:40px;border-radius:24px;border:1px solid rgba(244,67,54,.2);text-align:center;width:320px}
-        .dev-password-card h3{color:#EF5350;font-weight:900;font-size:28px;margin:0 0 5px}
-        .dev-password-card p{color:#555;font-size:12px;margin-bottom:22px}
-        .dev-password-card input{width:85%;padding:14px;border-radius:12px;border:2px solid rgba(255,255,255,.05);background:rgba(255,255,255,.02);color:white;font-size:18px;letter-spacing:8px;margin-bottom:15px;font-family:'Inter';text-align:center}
-        .dev-password-card input:focus{outline:none;border-color:rgba(244,67,54,.3)}
-        .dev-enter-btn{background:linear-gradient(135deg,#EF5350,#C62828);color:white;border:none;padding:12px 40px;border-radius:12px;font-weight:800;cursor:pointer;margin-right:10px;font-family:'Inter'}
-        .dev-cancel-btn{background:rgba(255,255,255,.05);color:#888;border:none;padding:12px 28px;border-radius:12px;cursor:pointer;font-family:'Inter'}
-        .dev-error{color:#EF5350;font-size:12px;margin-top:10px;height:18px;font-weight:600}
-        
-        .dev-console-panel{background:#0a0a10;width:500px;border-radius:24px;border:1px solid rgba(244,67,54,.2);overflow:hidden;position:relative}
-        .dev-console-header{background:linear-gradient(135deg,#EF5350,#C62828);padding:20px 25px;display:flex;justify-content:space-between;align-items:center}
-        .dev-console-header h2{margin:0;font-size:18px;font-weight:900}
-        .dev-console-body{padding:25px}
-        .dev-console-section{margin-bottom:22px}
-        .dev-console-section-title{font-size:10px;color:#EF5350;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;font-weight:800}
-        .dev-btn{width:100%;padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,.04);background:rgba(255,255,255,.02);color:white;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:8px;font-family:'Inter';display:flex;align-items:center;gap:10px;justify-content:center}
-        .dev-btn:hover{background:rgba(255,255,255,.05)}
-        .dev-input-row{display:flex;gap:10px;margin-bottom:8px}
-        .dev-input-row input{flex:1;padding:13px;border-radius:12px;border:1px solid rgba(255,255,255,.05);background:rgba(255,255,255,.02);color:white;font-size:14px;font-family:'Inter'}
-        .dev-input-row button{padding:13px 20px;border-radius:12px;border:none;background:#4CAF50;color:white;font-weight:800;cursor:pointer;font-family:'Inter'}
-        .dev-status{text-align:center;color:#4CAF50;font-size:13px;height:20px;margin-top:8px;font-weight:600}
+        .download-area .info .ver {
+            display: inline-block;
+            background: #1f3a32;
+            padding: 2px 16px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            color: #8ec0ae;
+            margin-top: 4px;
+            border: 1px solid #3d6757;
+        }
 
-        .toast-container{position:fixed;top:100px;right:25px;z-index:9997;display:flex;flex-direction:column;gap:10px}
-        .toast{background:rgba(12,12,20,.98);border:1px solid rgba(255,255,255,.05);border-radius:18px;padding:18px 22px;min-width:280px;max-width:380px;box-shadow:0 15px 50px rgba(0,0,0,.6);animation:toastIn .4s ease,toastOut .4s ease 2.6s forwards;display:flex;align-items:center;gap:14px}
-        .toast-icon{font-size:26px}
-        .toast-text{font-size:14px;color:#ccc;font-weight:500}
-        .toast-text strong{color:#4CAF50;font-weight:700}
-        @keyframes toastIn{from{transform:translateX(100px);opacity:0}to{transform:translateX(0);opacity:1}}
-        @keyframes toastOut{from{opacity:1}to{opacity:0;transform:translateX(50px)}}
+        .btn-dl {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: #2d4f42;
+            color: #e2f0ea;
+            padding: 14px 38px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            text-decoration: none;
+            border: 1px solid #4a7b68;
+            transition: all 0.2s;
+            box-shadow: 0 6px 0 #1d322a;
+        }
+
+        .btn-dl:hover {
+            background: #3f6b5a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 #1d322a;
+        }
+
+        .btn-dl:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #1d322a;
+        }
+
+        /* ---------- скриншоты ---------- */
+        .shots {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin: 40px 0 50px;
+        }
+
+        .shot {
+            aspect-ratio: 16/10;
+            background: #121d20;
+            border-radius: 20px 6px 20px 6px;
+            border: 1px solid #2a423b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: #607d72;
+            position: relative;
+            transition: 0.2s;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.6);
+            background-image: radial-gradient(circle at 20% 30%, #1f3530 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .shot:hover {
+            border-color: #4d7b6b;
+            transform: scale(1.01);
+        }
+
+        .shot .label {
+            position: absolute;
+            bottom: 12px;
+            background: #0e1a1aee;
+            padding: 4px 16px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            color: #b0cdc0;
+            backdrop-filter: blur(4px);
+            border: 1px solid #2a4a3e;
+            letter-spacing: 0.5px;
+        }
+
+        /* ---------- версия / чейнджлог ---------- */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+            margin: 30px 0 40px;
+        }
+
+        .col-block {
+            background: rgba(14, 22, 24, 0.4);
+            backdrop-filter: blur(6px);
+            border-radius: 24px 8px 24px 8px;
+            padding: 28px 26px;
+            border: 1px solid #2a3f38;
+        }
+
+        .col-block h3 {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #d2e2da;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .col-block h3 .badge {
+            font-size: 0.7rem;
+            background: #1d3a30;
+            padding: 0 14px;
+            border-radius: 40px;
+            color: #7fb3a0;
+        }
+
+        .col-block ul {
+            list-style: none;
+        }
+
+        .col-block ul li {
+            padding: 6px 0;
+            border-bottom: 1px solid #1e322c;
+            color: #b0c8d0;
+            display: flex;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
+
+        .col-block ul li:last-child {
+            border: none;
+        }
+
+        .col-block ul li::before {
+            content: '—';
+            color: #5b8a78;
+        }
+
+        /* ---------- FAQ ---------- */
+        .faq-section {
+            margin: 40px 0 30px;
+        }
+
+        .faq-section h2 {
+            font-size: 2rem;
+            font-weight: 500;
+            color: #d0e2dc;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .faq-item {
+            background: rgba(12, 20, 22, 0.3);
+            backdrop-filter: blur(4px);
+            border-radius: 20px 6px 20px 6px;
+            border: 1px solid #253b34;
+            padding: 16px 24px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .faq-item:hover {
+            border-color: #3e6b5c;
+        }
+
+        .faq-q {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 500;
+            color: #d4e6e0;
+            font-size: 1.05rem;
+            user-select: none;
+        }
+
+        .faq-q .arr {
+            color: #5d8a78;
+            transition: 0.3s;
+        }
+
+        .faq-item.open .faq-q .arr {
+            transform: rotate(180deg);
+        }
+
+        .faq-a {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease, padding 0.25s;
+            color: #a6bfca;
+            padding: 0 4px;
+        }
+
+        .faq-item.open .faq-a {
+            max-height: 200px;
+            padding-top: 12px;
+        }
+
+        /* ---------- подвал ---------- */
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #263b34;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            color: #6e8b80;
+            font-size: 0.9rem;
+        }
+
+        .footer .copy {
+            opacity: 0.8;
+        }
+
+        .footer .brand {
+            font-weight: 400;
+            color: #aac2ba;
+        }
+
+        .footer .brand span {
+            color: #6c9e89;
+        }
+
+        /* ---------- адаптив ---------- */
+        @media (max-width: 740px) {
+            .logo {
+                font-size: 2.8rem;
+            }
+            .logo-sub {
+                font-size: 0.9rem;
+                padding-left: 12px;
+                border-left: 1px solid #3f6b5c;
+            }
+            .download-area {
+                flex-direction: column;
+                gap: 20px;
+                align-items: stretch;
+                text-align: center;
+            }
+            .btn-dl {
+                justify-content: center;
+            }
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+            .features {
+                grid-template-columns: 1fr 1fr;
+            }
+            .hero-text p {
+                font-size: 1rem;
+            }
+            .tagline {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .features {
+                grid-template-columns: 1fr;
+            }
+            .logo {
+                font-size: 2.2rem;
+            }
+            .download-area {
+                padding: 24px 18px;
+            }
+            .btn-dl {
+                font-size: 1rem;
+                padding: 12px 24px;
+            }
+            .col-block {
+                padding: 20px 16px;
+            }
+            .faq-item {
+                padding: 14px 18px;
+            }
+        }
+
+        /* мелочи для "живости" — неровные отступы, разные скругления */
+        .fcard:nth-child(2n) {
+            border-radius: 8px 24px 8px 24px;
+        }
+        .shot:nth-child(3n) {
+            border-radius: 6px 20px 6px 20px;
+        }
+        .col-block:first-child {
+            border-radius: 8px 24px 8px 24px;
+        }
+        .btn-dl .icon {
+            font-size: 1.6rem;
+            line-height: 1;
+        }
     </style>
 </head>
 <body>
-    <div class="bg-layer" id="main-bg"></div>
-    <div class="bg-particles" id="particles"></div>
-    <div class="toast-container" id="toast-container"></div>
 
-    <div class="login-wrapper" id="login-screen">
-        <div class="logo-container"><div class="logo-text">CL</div></div>
-        <div class="login-card">
-            <div id="login-title" style="font-size:24px;font-weight:900;margin-bottom:30px;color:#CE93D8">ВХІД</div>
-            <label>НІКНЕЙМ</label><input type="text" id="nickname" autocomplete="off" placeholder="Ваш нік...">
-            <label>ПАРОЛЬ</label><input type="password" id="password" autocomplete="off" placeholder="••••••">
-            <div class="login-error" id="login-error"></div>
-            <button class="btn btn-green" id="login-btn" style="display:none" onclick="doLogin()">Увійти</button>
-            <button class="btn btn-purple" id="register-btn" style="display:none" onclick="doRegister()">Зареєструватися</button>
-            <div class="login-mode-toggle" id="login-toggle" onclick="toggleLoginMode()"></div>
+<div class="wrap">
+
+    <!-- шапка -->
+    <div class="header">
+        <div class="logo-line">
+            <span class="logo">Terminal</span>
+            <span class="logo-sub">by SeWa & Sfera</span>
+        </div>
+        <div class="tagline">
+            ⚡ быстрый, лёгкий, без лишней магии
         </div>
     </div>
 
-    <div class="settings-overlay" id="settings-overlay"><div class="settings-panel">
-        <div class="settings-header"><h2>⚙️ Налаштування</h2><button class="settings-close" onclick="closeSettings()">✕</button></div>
-        <div class="settings-body">
-            <div class="settings-section"><div class="settings-section-title">Звук</div>
-                <div class="settings-row"><div class="settings-row-label">🔊 Звуки гри</div><div class="toggle-switch active" onclick="this.classList.toggle('active')"></div></div>
-            </div>
-            <div class="settings-section"><div class="settings-section-title">Акаунт</div>
-                <button class="settings-action-btn btn-reset" onclick="if(confirm('Скинути прогрес?')){resetProgress()}">🗑️ Скинути прогрес</button>
-                <button class="settings-action-btn btn-logout-s" onclick="logoutAcc()">🚪 Вийти з акаунту</button>
-            </div>
-            <div class="dev-mode-trigger"><button class="dev-mode-btn" onclick="closeSettings();$('dev-auth').classList.add('open');$('dev-pw').value='';$('dev-err').innerText=''">Developer Mode</button></div>
-        </div>
-    </div></div>
-    
-    <div class="dev-overlay" id="dev-auth"><div class="dev-password-card"><h3>🔐</h3><p>Developer Access</p><input type="password" id="dev-pw" maxlength="10" placeholder="••••"><div class="dev-error" id="dev-err"></div><div style="margin-top:15px"><button class="dev-enter-btn" onclick="chkDev()">Enter</button><button class="dev-cancel-btn" onclick="$('dev-auth').classList.remove('open')">✕</button></div></div></div>
-    <div class="dev-overlay" id="dev-con"><div class="dev-console-panel">
-        <div class="dev-console-header"><h2>🛠️ Dev Console</h2><button class="settings-close" onclick="$('dev-con').classList.remove('open')" style="position:static">✕</button></div>
-        <div class="dev-console-body">
-            <div class="dev-console-section"><div class="dev-console-section-title">💰 Balance</div>
-                <div class="dev-input-row"><input type="number" id="dev-money" placeholder="LGX"><button onclick="let a=parseInt($('dev-money').value);if(a>0){P.balance+=a;save();dS('✅ +'+a)}">Add</button></div>
-                <button class="dev-btn" onclick="P.balance+=999999999;save();dS('✅ +999M')">💎 +999,999,999</button>
-            </div>
-            <div class="dev-console-section"><div class="dev-console-section-title">⭐ Level</div>
-                <button class="dev-btn" onclick="P.level=99;P.xp=0;save();dS('✅ LVL 99')">🏆 LVL 99</button>
-            </div>
-            <div class="dev-status" id="dev-st"></div>
-        </div>
-    </div></div>
+    <!-- описание -->
+    <div class="hero-text">
+        <p>
+            Терминал — это просто утилита, которая работает. Без тормозов, без сложных настроек.
+            Мы её пишем для себя, но делимся с вами. Интерфейс — тёмный, глаз не режет,
+            обновления выходят по делу, а не по графику.
+        </p>
+        <small>— из переписки с пользователями</small>
+    </div>
 
-    <div class="modal-overlay" id="build-modal">
-        <div class="modal-panel">
-            <button class="modal-close" onclick="$('build-modal').classList.remove('open')">✕</button>
-            <div class="build-tabs" id="build-tabs"></div>
-            <div class="bm-body" id="build-catalog-c" style="padding-top:10px"></div>
+    <!-- фичи -->
+    <div class="features">
+        <div class="fcard">
+            <span class="icon">🚀</span>
+            <h3>Быстрота</h3>
+            <p>Запускается за долю секунды, память ест скромно.</p>
+        </div>
+        <div class="fcard">
+            <span class="icon">🎭</span>
+            <h3>Интерфейс</h3>
+            <p>Минимум шума, только нужное. Тёмная тема — в подарок.</p>
+        </div>
+        <div class="fcard">
+            <span class="icon">📂</span>
+            <h3>Установка</h3>
+            <p>Распаковал архив — и готово. Никаких инсталляторов.</p>
+        </div>
+        <div class="fcard">
+            <span class="icon">🔄</span>
+            <h3>Обновления</h3>
+            <p>Не дёргаем каждую неделю. Только когда что-то реально улучшили.</p>
         </div>
     </div>
 
-    <div class="modal-overlay" id="bld-modal"><div class="modal-panel" id="bld-modal-c"></div></div>
-
-    <div id="game-ui">
-        <div class="header-stats">
-            <div class="user-info">
-                <div class="user-avatar-mini" id="ui-av">C</div>
-                <div class="user-details">
-                    <div class="user-name" id="ui-nick">Player</div>
-                    <div class="user-meta"><span>⭐ LVL <b id="ui-lvl">1</b></span><span>🏢 <b id="ui-biz">0</b></span><span>🏙️ <b id="ui-bld">0</b></span></div>
-                </div>
-            </div>
-            <div class="balance-box">
-                <div class="income-badge">📈 +<span id="ui-inc">0</span>/10с</div>
-                <div class="balance-main"><div class="balance-amount">💎 <span id="ui-bal">0</span> LGX</div><div class="balance-sub">Premium Currency</div></div>
-            </div>
+    <!-- загрузка -->
+    <div class="download-area">
+        <div class="info">
+            <h2>Скачать последнюю версию</h2>
+            <div class="ver">v1.0 · 16.07.2026</div>
         </div>
-        <div class="nav-tabs">
-            <div class="nav-btn active" onclick="switchTab('auction')">🎰 Аукціон</div>
-            <div class="nav-btn" onclick="switchTab('city')">🏙️ Місто</div>
-            <div class="nav-btn" onclick="switchTab('illegal')">🎭 Нелегал</div>
-            <div class="nav-btn" onclick="switchTab('profile')">👤 Профіль</div>
+        <a href="ddossewa.zip" download class="btn-dl">
+            <span class="icon">⬇️</span> ZIP-архив
+        </a>
+    </div>
+
+    <!-- скриншоты -->
+    <div class="shots">
+        <div class="shot"><span class="label">главный экран</span></div>
+        <div class="shot"><span class="label">настройки</span></div>
+        <div class="shot"><span class="label">терминал</span></div>
+    </div>
+
+    <!-- версия + чейнджлог -->
+    <div class="two-col">
+        <div class="col-block">
+            <h3>
+                📋 Версия
+                <span class="badge">1.0</span>
+            </h3>
+            <ul>
+                <li>Сборка от 16 июля 2026</li>
+                <li>Windows / Linux / macOS</li>
+                <li>Вес ~7.8 МБ</li>
+                <li>Архитектура x64, ARM64</li>
+            </ul>
         </div>
-
-        <div id="tab-auction" class="tab-content active">
-            <div class="roulette-section"><div class="roulette-frame">
-                <div class="roulette-pointer"><svg width="44" height="32" viewBox="0 0 44 32"><defs><linearGradient id="pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" style="stop-color:#E1BEE7"/><stop offset="100%" style="stop-color:#9C27B0"/></linearGradient></defs><polygon points="22,32 0,0 44,0" fill="url(#pg)"/></svg></div>
-                <div class="roulette-viewport"><div class="roulette-center-line"></div><div class="roulette-track" id="track"></div></div>
-            </div></div>
-            <div id="win-message"></div>
-            <h3 style="color:#555;font-weight:700;margin:20px 0;font-size:13px;letter-spacing:2px">🎁 КОНТЕЙНЕРИ</h3>
-            <div class="container-grid">
-                <div class="container-item" onclick="spin('yellow',100)"><div class="c-icon">📦</div><div class="c-tier" style="color:#FFD700">BASIC</div><div class="container-price">100 LGX</div></div>
-                <div class="container-item" onclick="spin('green',1500)"><div class="c-icon">📦</div><div class="c-tier" style="color:#4CAF50">STANDARD</div><div class="container-price">1,500 LGX</div></div>
-                <div class="container-item" onclick="spin('blue',7000)"><div class="c-icon">📦</div><div class="c-tier" style="color:#2196F3">PREMIUM</div><div class="container-price">7,000 LGX</div><div class="locked-overlay" id="lock-blue">🔒<br>LVL 3</div></div>
-                <div class="container-item" onclick="spin('red',30000)"><div class="c-icon">📦</div><div class="c-tier" style="color:#EF5350">ELITE</div><div class="container-price">30,000 LGX</div><div class="locked-overlay" id="lock-red">🏢 3 офіси</div></div>
-            </div>
-        </div>
-
-        <div id="tab-city" class="tab-content" style="padding-bottom:0">
-            <div class="city-hud">
-                <div class="city-hud-left">
-                    <h2>🏙️ <span>РІВНЕ</span></h2>
-                    <p>Розвивай місто та отримуй прибуток</p>
-                    <button class="btn btn-green" style="margin-top:15px; padding:10px 25px; font-size:14px; pointer-events:auto;" onclick="$('build-modal').classList.add('open');renderBuildCat('residential')">🏗️ Побудувати</button>
-                </div>
-                <div class="city-hud-right">
-                    <div class="city-hud-stat"><div class="city-hud-stat-label">НАСЕЛЕННЯ</div><div class="city-hud-stat-value pop" id="city-pop">0</div></div>
-                    <div class="city-hud-stat"><div class="city-hud-stat-label">ЩАСТЯ</div><div class="city-hud-stat-value happy" id="city-happy">0%</div></div>
-                    <div class="city-hud-stat"><div class="city-hud-stat-label">ОФІСИ</div><div class="city-hud-stat-value" style="color:#7986CB" id="city-offices">0/3</div></div>
-                </div>
-            </div>
-            <div class="city-map-wrapper" id="cmw">
-                <div class="city-map" id="cmap">
-                    <div class="ghost-building" id="ghost-bld"></div>
-                </div>
-            </div>
-        </div>
-
-        <div id="tab-illegal" class="tab-content" style="justify-content:center">
-            <div style="text-align:center; padding:50px">
-                <div style="font-size:60px; margin-bottom:20px; filter:grayscale(1) opacity(0.5)">🎭</div>
-                <h1 style="color:#EF5350; font-weight:900; margin:0 0 10px 0; font-size:32px">НЕЛЕГАЛ</h1>
-                <p style="color:#888; font-size:14px">Очікуйте в наступних оновленнях. Темна сторона міста ще розробляється...</p>
-            </div>
-        </div>
-
-        <div id="tab-profile" class="tab-content">
-            <div class="profile-hero">
-                <div class="profile-hero-bg"></div>
-                <div class="profile-hero-content">
-                    <input type="file" id="av-in" accept="image/*" style="display:none">
-                    <div class="profile-avatar-wrapper" onclick="$('av-in').click()">
-                        <div class="profile-avatar-ring"></div>
-                        <div class="profile-avatar-ring-inner"></div>
-                        <div class="profile-avatar">
-                            <img id="av-img" src="" style="display:none">
-                            <div id="av-ph" class="profile-avatar-placeholder">📷<br>ФОТО</div>
-                        </div>
-                        <div class="profile-avatar-edit">✏️</div>
-                        <div class="profile-level-badge">LVL <span id="p-lvl-badge">1</span></div>
-                    </div>
-                    <div class="profile-name" id="p-nick">Player</div>
-                    <div class="profile-title">🎮 Tycoon Builder</div>
-                    
-                    <div class="profile-level-section">
-                        <div class="profile-level-header">
-                            <div class="profile-level-text">⭐ Рівень <span id="p-lvl">1</span></div>
-                            <div class="profile-level-xp"><span id="p-xp-current">0</span>/<span id="p-xp-max">1000</span> XP</div>
-                        </div>
-                        <div class="profile-level-bar"><div class="profile-level-fill" id="p-xp"></div></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="daily-card">
-                <div class="daily-header">
-                    <div class="daily-icon">🎁</div>
-                    <div><div class="daily-title">ЩОДЕННА НАГОРОДА</div><div class="daily-subtitle">Заходь кожен день!</div></div>
-                </div>
-                <div class="daily-days" id="daily-streak"></div>
-                <button class="daily-btn" id="daily-btn" onclick="claimDaily()">Забрати</button>
-            </div>
-
-            <div class="time-card">
-                <div class="time-main">
-                    <div class="time-icon">⏱️</div>
-                    <div><div class="time-label">Час у грі</div><div class="time-value" id="time-total">00:00:00</div></div>
-                </div>
-                <div class="time-session"><div class="time-session-label">Сесія</div><div class="time-session-value" id="time-session">00:00</div></div>
-            </div>
-
-            <div class="stats-section">
-                <div class="stats-header">📊 Статистика</div>
-                <div class="stats-grid">
-                    <div class="stat-card gold"><div class="stat-icon">💰</div><div class="stat-value" id="s-bal">0</div><div class="stat-label">Баланс</div></div>
-                    <div class="stat-card purple"><div class="stat-icon">📦</div><div class="stat-value" id="s-opened">0</div><div class="stat-label">Контейнерів</div></div>
-                    <div class="stat-card green"><div class="stat-icon">💼</div><div class="stat-value" id="s-biz">0</div><div class="stat-label">Бізнесів</div></div>
-                    <div class="stat-card blue"><div class="stat-icon">🏗️</div><div class="stat-value" id="s-bld">0</div><div class="stat-label">Будівлі</div></div>
-                    <div class="stat-card blue"><div class="stat-icon">👥</div><div class="stat-value" id="s-pop">0</div><div class="stat-label">Населення</div></div>
-                    <div class="stat-card green"><div class="stat-icon">📈</div><div class="stat-value" id="s-inc">0</div><div class="stat-label">Дохід/10с</div></div>
-                </div>
-            </div>
-
-            <button class="settings-btn-new" onclick="openSettings()"><span>⚙️</span> Налаштування</button>
+        <div class="col-block">
+            <h3>
+                📝 Что нового
+                <span class="badge">v1.0</span>
+            </h3>
+            <ul>
+                <li>Первый релиз — всё работает</li>
+                <li>Тёмная тема, настраиваемый шрифт</li>
+                <li>Базовый набор команд</li>
+                <li>Автосохранение настроек</li>
+            </ul>
         </div>
     </div>
 
+    <!-- FAQ -->
+    <div class="faq-section">
+        <h2>Частые вопросы</h2>
+        <div class="faq-list">
+
+            <div class="faq-item">
+                <div class="faq-q">
+                    <span>Что за Terminal?</span>
+                    <span class="arr">▾</span>
+                </div>
+                <div class="faq-a">
+                    Утилита для быстрого доступа к системе через единое окно.
+                    Никакого хайпа, просто работающий инструмент.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">
+                    <span>Зависимости нужны?</span>
+                    <span class="arr">▾</span>
+                </div>
+                <div class="faq-a">
+                    Нет. Всё встроено. Открываете архив и запускаете.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">
+                    <span>Как часто обновляете?</span>
+                    <span class="arr">▾</span>
+                </div>
+                <div class="faq-a">
+                    Когда появляются значимые фиксы или новые фичи.
+                    Обычно раз в месяц, но без фанатизма.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">
+                    <span>Русский язык есть?</span>
+                    <span class="arr">▾</span>
+                </div>
+                <div class="faq-a">
+                    Да, интерфейс на русском и английском. Определяется автоматически.
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- футер -->
+    <div class="footer">
+        <div class="copy">© 2026 SeWa & Sfera</div>
+        <div class="brand">Terminal <span>by</span> SeWa & Sfera</div>
+    </div>
+
+</div>
+
+<!-- JS для FAQ -->
 <script>
-const $ = id => document.getElementById(id);
-
-// Частинки
-function createParticles() {
-    const c = $('particles');
-    if (!c) return;
-    c.innerHTML = '';
-    for (let i = 0; i < 20; i++) {
-        const p = document.createElement('div');
-        p.className = 'particle';
-        p.style.left = Math.random() * 100 + '%';
-        p.style.animationDelay = Math.random() * 15 + 's';
-        p.style.animationDuration = (10 + Math.random() * 15) + 's';
-        c.appendChild(p);
-    }
-}
-createParticles();
-
-// Аудіо
-let audioCtx = null;
-function initAudio() { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
-function playTick(f=800, d=0.03) {
-    if (!audioCtx) return; try { const o=audioCtx.createOscillator(),g=audioCtx.createGain(); o.connect(g); g.connect(audioCtx.destination); o.frequency.value=f; o.type='sine'; g.gain.setValueAtTime(0.05, audioCtx.currentTime); g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime+d); o.start(); o.stop(audioCtx.currentTime+d); } catch(e){}
-}
-function playWin() {
-    if (!audioCtx) return; [0, 0.1, 0.2, 0.35].forEach((d, i) => { const o=audioCtx.createOscillator(),g=audioCtx.createGain(); o.connect(g); g.connect(audioCtx.destination); o.frequency.value=[523, 659, 784, 1047][i]; o.type='sine'; g.gain.setValueAtTime(0.08, audioCtx.currentTime+d); g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime+d+0.3); o.start(audioCtx.currentTime+d); o.stop(audioCtx.currentTime+d+0.3); });
-}
-function playCash() {
-    if (!audioCtx) return; const o=audioCtx.createOscillator(),g=audioCtx.createGain(); o.connect(g); g.connect(audioCtx.destination); o.frequency.value=1200; o.type='sine'; g.gain.setValueAtTime(0.06, audioCtx.currentTime); g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime+0.15); o.start(); o.stop(audioCtx.currentTime+0.15);
-}
-
-const carDB = {
-    yellow: [ { name: "Lada 2107", price: 150, img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Golf_II_jaslo.jpg/330px-Golf_II_jaslo.jpg" }, { name: "Daewoo Lanos", price: 200, img: "https://upload.wikimedia.org/wikipedia/commons/e/ec/Daewoo_Lanos_front_20080110.jpg" } ],
-    green: [ { name: "Skoda Octavia", price: 1800, img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Skoda_Octavia_I_front_20080213.jpg/250px-Skoda_Octavia_I_front_20080213.jpg" }, { name: "Toyota Camry", price: 2500, img: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/2010_Toyota_Camry_base_--_11-25-2009.jpg/250px-2010_Toyota_Camry_base_--_11-25-2009.jpg" } ],
-    blue: [ { name: "BMW M5", price: 11000, img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/2021_BMW_M5_CS_F90.jpg/330px-2021_BMW_M5_CS_F90.jpg" }, { name: "Mercedes G", price: 15000, img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Mercedes-Benz_W465_450_d_DSC_0679.jpg/250px-Mercedes-Benz_W465_450_d_DSC_0679.jpg" } ],
-    red: [ { name: "Lamborghini", price: 50000, img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Lamborghini_Aventador_Front_View.jpg/320px-Lamborghini_Aventador_Front_View.jpg" }, { name: "Rolls-Royce", price: 80000, img: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Rolls-Royce_Phantom_VIII_IMG_4576.jpg/320px-Rolls-Royce_Phantom_VIII_IMG_4576.jpg" } ]
-};
-
-// Прокачка для бізнесів
-const bizUp = {
-    wb: { name: 'Сайт', icon: '🌐', price: 100, bonus: 0.1, desc: '+10%' },
-    ad: { name: 'Реклама', icon: '📢', price: 500, bonus: 0.15, desc: '+15%' },
-    mg: { name: 'Менеджер', icon: '👔', price: 2000, bonus: 0.2, desc: '+20%' },
-    lo: { name: 'Преміум', icon: '📍', price: 10000, bonus: 0.5, desc: '+50%' }
-};
-
-// ЄДИНИЙ КАТАЛОГ ВСІХ БУДІВЕЛЬ (Об'єднані місто + бізнеси)
-const Catalog = [
-    // ЖИТЛО
-    { id: 'h1', cat: 'residential', name: 'Жилий будинок', icon: '🏠', cls: 'b-residential', desc: '20 мешканців', w: 75, h: 75, cost: 2000, income: 30, pop: 20, happy: 5, reqLvl: 1 },
-    { id: 'h2', cat: 'residential', name: 'Багатоповерхівка', icon: '🏢', cls: 'b-residential', desc: '150 мешканців', w: 85, h: 95, cost: 25000, income: 300, pop: 150, happy: 3, reqLvl: 8 },
-    { id: 'h3', cat: 'residential', name: 'Житловий комплекс', icon: '🏘️', cls: 'b-residential', desc: '500 мешканців', w: 120, h: 110, cost: 150000, income: 1800, pop: 500, happy: 10, reqLvl: 20 },
-    
-    // ОФІСИ
-    { id: 'office1', cat: 'office', name: 'Малий Офіс', icon: '🏛️', cls: 'b-office', desc: 'Elite (1/3)', w: 90, h: 85, cost: 50000, income: 500, pop: 25, happy: 5, reqLvl: 10, isOffice: true },
-    { id: 'office2', cat: 'office', name: 'Бізнес-центр', icon: '🏢', cls: 'b-office', desc: 'Elite (2/3)', w: 95, h: 90, cost: 100000, income: 1000, pop: 40, happy: 3, reqLvl: 18, isOffice: true },
-    { id: 'office3', cat: 'office', name: 'Офіс Держ', icon: '🏗️', cls: 'b-office', desc: 'Elite (3/3)', w: 90, h: 85, cost: 200000, income: 2000, pop: 50, happy: 5, reqLvl: 30, isOffice: true },
-    { id: 'office4', cat: 'office', name: 'Хмарочос', icon: '🏙️', cls: 'b-office', desc: 'Супер Офіс', w: 110, h: 150, cost: 500000, income: 6000, pop: 100, happy: 8, reqLvl: 40, isOffice: false },
-
-    // БІЗНЕСИ (колишня монополія, тепер ставляться на карту, мають свої апгрейди)
-    { id: 'kiosk', cat: 'business', name: 'Кіоск', icon: '📰', cls: 'b-business', desc: 'Газети та снеки', w: 70, h: 70, cost: 500, income: 10, pop: 2, happy: 2, reqLvl: 5, isBiz: true },
-    { id: 'cafe', cat: 'business', name: 'Кафе', icon: '☕', cls: 'b-business', desc: 'Кава та випічка', w: 80, h: 80, cost: 3000, income: 50, pop: 5, happy: 5, reqLvl: 10, isBiz: true },
-    { id: 'bakery', cat: 'business', name: 'Пекарня', icon: '🥐', cls: 'b-business', desc: 'Свіжа випічка', w: 80, h: 85, cost: 12000, income: 150, pop: 8, happy: 8, reqLvl: 12, isBiz: true },
-    { id: 'carwash', cat: 'business', name: 'Автомийка', icon: '🚗', cls: 'b-business', desc: 'Мийка авто', w: 90, h: 90, cost: 15000, income: 200, pop: 5, happy: 5, reqLvl: 15, isBiz: true },
-    { id: 'bar', cat: 'business', name: 'Бар', icon: '🍺', cls: 'b-business', desc: 'Нічне життя', w: 85, h: 85, cost: 25000, income: 350, pop: 10, happy: 10, reqLvl: 18, isBiz: true },
-    { id: 'pharmacy', cat: 'business', name: 'Аптека', icon: '💊', cls: 'b-business', desc: 'Ліки та здоров\'я', w: 80, h: 80, cost: 35000, income: 450, pop: 12, happy: 15, reqLvl: 20, isBiz: true },
-    { id: 'gym', cat: 'business', name: 'Спортзал', icon: '🏋️', cls: 'b-business', desc: 'Фітнес центр', w: 100, h: 90, cost: 45000, income: 600, pop: 15, happy: 15, reqLvl: 22, isBiz: true },
-    { id: 'rest', cat: 'business', name: 'Ресторан', icon: '🍽️', cls: 'b-business', desc: 'Елітна кухня', w: 110, h: 100, cost: 75000, income: 800, pop: 20, happy: 15, reqLvl: 25, isBiz: true },
-    { id: 'clinic', cat: 'business', name: 'Клініка', icon: '🏥', cls: 'b-business', desc: 'Приватна клініка', w: 100, h: 100, cost: 180000, income: 2200, pop: 30, happy: 20, reqLvl: 35, isBiz: true },
-    { id: 'hotel', cat: 'business', name: 'Готель', icon: '🏨', cls: 'b-business', desc: '5 зірок', w: 120, h: 140, cost: 500000, income: 5000, pop: 50, happy: 10, reqLvl: 40, isBiz: true },
-
-    // РОЗВАГИ Й ІНШЕ
-    { id: 'park', cat: 'other', name: 'Парк', icon: '🌳', cls: 'b-entertainment', desc: 'Міський парк', w: 120, h: 100, cost: 60000, income: 400, pop: 0, happy: 25, reqLvl: 10 },
-    { id: 'cinema', cat: 'other', name: 'Кінотеатр', icon: '🎬', cls: 'b-entertainment', desc: '6 залів', w: 85, h: 75, cost: 30000, income: 500, pop: 10, happy: 20, reqLvl: 7 },
-    { id: 'school', cat: 'other', name: 'Школа', icon: '🏫', cls: 'b-education', desc: 'Школа', w: 85, h: 75, cost: 25000, income: 300, pop: 30, happy: 12, reqLvl: 5 },
-    { id: 'factory', cat: 'other', name: 'Завод', icon: '🏭', cls: 'b-industrial', desc: 'Завод', w: 100, h: 85, cost: 80000, income: 1500, pop: 40, happy: -5, reqLvl: 12 },
-    { id: 'police', cat: 'other', name: 'Поліція', icon: '👮', cls: 'b-government', desc: 'Безпека', w: 80, h: 80, cost: 60000, income: 400, pop: 10, happy: 15, reqLvl: 14 }
-];
-
-const cats = {
-    'residential': '🏠 Жилі',
-    'office': '🏢 Офіси',
-    'business': '💼 Бізнеси',
-    'other': '🌳 Інше'
-};
-
-const ACC_KEY = 'cli_accounts';
-const SESS_KEY = 'cli_session';
-function getAccounts() { return JSON.parse(localStorage.getItem(ACC_KEY) || '{}'); }
-function saveAccounts(acc) { localStorage.setItem(ACC_KEY, JSON.stringify(acc)); }
-function getSession() { return JSON.parse(localStorage.getItem(SESS_KEY) || 'null'); }
-function saveSession(s) { localStorage.setItem(SESS_KEY, JSON.stringify(s)); }
-
-let loginMode = 'login', sessionStart = Date.now();
-
-function updateLoginUI() {
-    const accs = getAccounts();
-    if (Object.keys(accs).length > 0) {
-        loginMode = 'login'; $('login-title').innerText = 'ВХІД';
-        $('login-toggle').innerText = 'Немає акаунту? Зареєструватися'; $('login-toggle').style.display = 'block';
-    } else {
-        loginMode = 'register'; $('login-title').innerText = 'РЕЄСТРАЦІЯ';
-        $('login-toggle').style.display = 'none';
-    }
-    chkLogin();
-}
-
-function toggleLoginMode() {
-    loginMode = loginMode === 'login' ? 'register' : 'login';
-    $('login-title').innerText = loginMode === 'login' ? 'ВХІД' : 'РЕЄСТРАЦІЯ';
-    $('login-toggle').innerText = loginMode === 'login' ? 'Немає акаунту? Зареєструватися' : 'Є акаунт? Увійти';
-    $('login-error').innerText = ''; chkLogin();
-}
-
-function chkLogin() {
-    const ok = $('nickname').value.trim() && $('password').value.trim();
-    if (loginMode === 'login') { $('login-btn').style.display = ok ? 'inline-block' : 'none'; $('register-btn').style.display = 'none'; }
-    else { $('register-btn').style.display = ok ? 'inline-block' : 'none'; $('login-btn').style.display = 'none'; }
-}
-$('nickname').addEventListener('input', () => { $('login-error').innerText = ''; chkLogin(); });
-$('password').addEventListener('input', () => { $('login-error').innerText = ''; chkLogin(); });
-
-function doLogin() {
-    const nick = $('nickname').value.trim(), pw = $('password').value;
-    const accs = getAccounts();
-    if (!accs[nick]) return $('login-error').innerText = '❌ Акаунт не знайдено';
-    if (accs[nick].password !== pw) return $('login-error').innerText = '❌ Невірний пароль';
-    P = { ...defaultPlayer(), ...accs[nick].data, nick };
-    migrateData();
-    saveSession({ nick, loginTime: Date.now() }); sessionStart = Date.now(); go();
-}
-
-function doRegister() {
-    const nick = $('nickname').value.trim(), pw = $('password').value;
-    if (nick.length < 2) return $('login-error').innerText = '❌ Нік мін. 2 символи';
-    if (pw.length < 3) return $('login-error').innerText = '❌ Пароль мін. 3 символи';
-    const accs = getAccounts();
-    if (accs[nick]) return $('login-error').innerText = '❌ Такий нік зайнятий';
-    P = defaultPlayer(); P.nick = nick;
-    accs[nick] = { password: pw, data: { ...P } };
-    saveAccounts(accs); saveSession({ nick, loginTime: Date.now() }); sessionStart = Date.now();
-    toast('🎉', `Акаунт <strong>${nick}</strong> створено!`); go();
-}
-
-function defaultPlayer() {
-    return { nick: 'Player', balance: 5000, level: 1, xp: 0, opened: 0, avatarData: null, daily: { streak: 0, lastClaim: 0 }, totalTime: 0, cityBuildings: [] };
-}
-
-function migrateData() {
-    if(!P.cityBuildings) {
-        P.cityBuildings = [];
-        // Очищаємо старі дані монополії та міста, щоб не було конфліктів, гравець починає будувати з чистого аркуша.
-        delete P.cb; delete P.businesses;
-    }
-}
-
-function logoutAcc() {
-    closeSettings();
-    P.totalTime = (P.totalTime || 0) + Math.floor((Date.now() - sessionStart) / 1000);
-    savePlayerData(); localStorage.removeItem(SESS_KEY); location.reload();
-}
-
-function resetProgress() {
-    const accs = getAccounts(), nick = P.nick, pw = accs[nick]?.password;
-    P = defaultPlayer(); P.nick = nick;
-    accs[nick] = { password: pw, data: { ...P } }; saveAccounts(accs); location.reload();
-}
-
-let P = defaultPlayer();
-let spinning = false;
-
-function savePlayerData() {
-    const accs = getAccounts();
-    if (accs[P.nick]) { accs[P.nick].data = { ...P }; saveAccounts(accs); }
-}
-function save() { savePlayerData(); updateUI(); }
-
-window.onload = () => {
-    updateLoginUI(); const sess = getSession();
-    if (sess) {
-        const accs = getAccounts();
-        if (accs[sess.nick]) { P = { ...defaultPlayer(), ...accs[sess.nick].data, nick: sess.nick }; migrateData(); sessionStart = Date.now(); go(); }
-    }
-};
-
-window.addEventListener('beforeunload', () => { P.totalTime = (P.totalTime || 0) + Math.floor((Date.now() - sessionStart) / 1000); savePlayerData(); });
-
-function go() {
-    $('login-screen').classList.add('hidden'); $('game-ui').style.display = 'flex';
-    initAudio(); buildIdle(); updateUI(); buildCity(); startLoops(); updateDaily(); startTimeTracker();
-}
-
-function switchTab(t) {
-    document.querySelectorAll('.tab-content').forEach(e => e.classList.remove('active'));
-    document.querySelectorAll('.nav-btn').forEach(e => e.classList.remove('active'));
-    $('tab-' + t).classList.add('active');
-    const m = { auction: 0, city: 1, illegal: 2, profile: 3 };
-    document.querySelectorAll('.nav-btn')[m[t]].classList.add('active');
-    $('main-bg').style.opacity = t === 'auction' ? '1' : '0';
-    if (t === 'city') buildCity();
-    if (t === 'profile') updateDaily();
-}
-
-function buildIdle() {
-    const t = $('track'); t.innerHTML = ''; const a = [...carDB.yellow, ...carDB.green];
-    for (let i = 0; i < 10; i++) { const c = a[~~(Math.random() * a.length)]; t.innerHTML += cardH(c, carDB.yellow.includes(c) ? 'yellow' : 'green'); }
-    t.style.transition = 'none'; t.style.transform = `translateX(${460 - 192 * 2}px)`;
-}
-
-// Рендер вкладок у меню будівництва
-function renderBuildTabs(activeCat) {
-    let html = '';
-    Object.entries(cats).forEach(([k, v]) => {
-        html += `<button class="build-tab-btn ${k===activeCat?'active':''}" onclick="renderBuildCat('${k}')">${v}</button>`;
-    });
-    $('build-tabs').innerHTML = html;
-}
-
-// Рендер каталогу будівництва
-function renderBuildCat(cat) {
-    renderBuildTabs(cat);
-    const g = $('build-catalog-c');
-    g.innerHTML = '<div class="build-catalog-grid">' + Catalog.filter(b => b.cat === cat).map(b => {
-        const l = P.level < b.reqLvl;
-        const p = P.balance < b.cost;
-        return `<div class="build-catalog-card ${l ? 'locked' : ''}">
-            <div class="bc-lvl-badge">LVL ${b.reqLvl}+</div>
-            <div class="bc-icon">${b.icon}</div>
-            <div class="bc-name">${b.name}</div>
-            <div class="bc-desc">${b.desc}</div>
-            <div class="bc-stats">
-                <div class="bc-stat"><span class="bc-stat-label">Ціна</span><span class="bc-stat-value" style="color:#FFD700">${b.cost.toLocaleString()}</span></div>
-                <div class="bc-stat"><span class="bc-stat-label">Дохід</span><span class="bc-stat-value">+${b.income}</span></div>
-            </div>
-            <button class="bc-buy-btn" ${(l || p) ? 'disabled' : ''} onclick="startPlacement('${b.id}')">${l ? '🔒 LVL ' + b.reqLvl : 'Побудувати'}</button>
-        </div>`;
-    }).join('') + '</div>';
-}
-
-// ========== СИСТЕМА РОЗМІЩЕННЯ ==========
-let placingTemplate = null;
-const mapWrap = $('cmw'), map = $('cmap'), ghost = $('ghost-bld');
-let isDraggingMap = false, sx, sy, sl, st2, hasMoved = false;
-
-function startPlacement(id) {
-    placingTemplate = Catalog.find(x => x.id === id);
-    if (!placingTemplate || P.balance < placingTemplate.cost) return;
-    $('build-modal').classList.remove('open');
-    map.classList.add('placing');
-    ghost.style.display = 'flex';
-    ghost.style.width = placingTemplate.w + 'px';
-    ghost.style.height = placingTemplate.h + 'px';
-    ghost.innerHTML = `<div class="building-icon">${placingTemplate.icon}</div>`;
-}
-
-mapWrap.onmousedown = e => {
-    isDraggingMap = true; hasMoved = false; sx = e.pageX; sy = e.pageY; sl = mapWrap.scrollLeft; st2 = mapWrap.scrollTop;
-    if(!placingTemplate) mapWrap.style.cursor = 'grabbing';
-};
-mapWrap.onmouseup = mapWrap.onmouseleave = () => {
-    isDraggingMap = false; if(!placingTemplate) mapWrap.style.cursor = 'grab';
-};
-mapWrap.onmousemove = e => {
-    if (isDraggingMap) {
-        if (Math.abs(e.pageX - sx) > 5 || Math.abs(e.pageY - sy) > 5) hasMoved = true;
-        mapWrap.scrollLeft = sl - (e.pageX - sx);
-        mapWrap.scrollTop = st2 - (e.pageY - sy);
-    }
-    if (placingTemplate) {
-        const rect = map.getBoundingClientRect();
-        let x = e.clientX - rect.left - placingTemplate.w / 2;
-        let y = e.clientY - rect.top - placingTemplate.h / 2;
-        // Прив'язка до сітки 10px для рівності
-        x = Math.round(x / 10) * 10;
-        y = Math.round(y / 10) * 10;
-        ghost.style.transform = `translate(${x}px, ${y}px)`;
-    }
-};
-
-mapWrap.onclick = e => {
-    if (hasMoved || !placingTemplate) return;
-    const rect = map.getBoundingClientRect();
-    let x = e.clientX - rect.left - placingTemplate.w / 2;
-    let y = e.clientY - rect.top - placingTemplate.h / 2;
-    x = Math.round(x / 10) * 10; y = Math.round(y / 10) * 10;
-
-    if (P.balance < placingTemplate.cost) { toast('💰', 'Недостатньо коштів'); return; }
-    P.balance -= placingTemplate.cost;
-    
-    P.cityBuildings.push({
-        uid: 'b_' + Date.now() + '_' + Math.floor(Math.random()*1000),
-        tid: placingTemplate.id, x, y, lvl: 1, upg: [], accInc: 0, totalEarned: 0
-    });
-    
-    save(); playCash();
-    toast('🏗️', `<strong>${placingTemplate.name}</strong> збудовано!`);
-    
-    // Скидаємо режим
-    placingTemplate = null; ghost.style.display = 'none'; map.classList.remove('placing'); mapWrap.style.cursor = 'grab';
-    buildCity();
-};
-
-function getOwnedOffices() { return P.cityBuildings.filter(b => Catalog.find(c => c.id === b.tid)?.isOffice).length; }
-function hasEliteAccess() { return getOwnedOffices() >= 3; }
-
-function calcBInc(b, t) {
-    let inc = t.income * (b.lvl || 1), bon = 0;
-    (b.upg || []).forEach(u => { const up = bizUp[u]; if (up) bon += up.bonus; });
-    return Math.floor(inc * (1 + bon));
-}
-
-function getTotalInc() {
-    let t = 0;
-    P.cityBuildings.forEach(b => {
-        const temp = Catalog.find(x => x.id === b.tid);
-        if (temp) t += calcBInc(b, temp);
-    });
-    return t;
-}
-
-function updateUI() {
-    $('ui-nick').innerText = P.nick; $('ui-bal').innerText = P.balance.toLocaleString(); $('ui-lvl').innerText = P.level;
-    
-    let bz = P.cityBuildings.filter(b => Catalog.find(c => c.id === b.tid)?.isBiz).length;
-    let ot = P.cityBuildings.length - bz;
-    $('ui-biz').innerText = bz; $('ui-bld').innerText = ot;
-    
-    $('p-nick').innerText = P.nick; $('p-lvl').innerText = P.level; $('p-lvl-badge').innerText = P.level;
-    $('s-bal').innerText = P.balance.toLocaleString(); $('s-opened').innerText = P.opened;
-    
-    const xpNeeded = P.level * 1000;
-    $('p-xp').style.width = Math.min((P.xp / xpNeeded) * 100, 100) + '%';
-    $('p-xp-current').innerText = P.xp; $('p-xp-max').innerText = xpNeeded;
-    
-    const ai = $('av-img'), ap = $('av-ph');
-    if (P.avatarData) { ai.src = P.avatarData; ai.style.display = 'block'; ap.style.display = 'none'; $('ui-av').innerHTML = `<img src="${P.avatarData}" style="width:100%;height:100%;object-fit:cover">`; }
-    else { ai.style.display = 'none'; ap.style.display = 'block'; $('ui-av').innerText = P.nick.charAt(0).toUpperCase(); }
-    
-    $('lock-blue').style.display = (P.level >= 3) ? 'none' : 'flex'; $('lock-red').style.display = hasEliteAccess() ? 'none' : 'flex';
-    
-    const ti = getTotalInc();
-    $('ui-inc').innerText = ti.toLocaleString(); $('s-biz').innerText = bz; $('s-inc').innerText = ti.toLocaleString();
-    
-    let pop = 0, hap = 0;
-    P.cityBuildings.forEach(b => {
-        const t = Catalog.find(x => x.id === b.tid);
-        if(t) { pop += t.pop * (b.lvl || 1); hap += t.happy * (b.lvl || 1); }
-    });
-    $('city-pop').innerText = pop.toLocaleString(); $('city-happy').innerText = Math.max(0, Math.min(100, 50 + hap)) + '%';
-    $('s-bld').innerText = ot; $('s-pop').innerText = pop.toLocaleString(); $('city-offices').innerText = getOwnedOffices() + '/3';
-}
-
-$('av-in').addEventListener('change', e => {
-    const f = e.target.files[0]; if (f) { const r = new FileReader(); r.onload = e => { P.avatarData = e.target.result; save(); }; r.readAsDataURL(f); }
-});
-
-function buildCity() {
-    const mapEl = $('cmap');
-    // Очищаємо всі старі будинки, лишаємо тільки ghost
-    Array.from(mapEl.children).forEach(c => { if (c.id !== 'ghost-bld') c.remove(); });
-    
-    // Рендер доріг як декорацій (статичні)
-    const roads = [ { x:0,y:170,w:2400,h:30 }, { x:0,y:400,w:2400,h:30 }, { x:0,y:640,w:2400,h:30 }, { x:0,y:890,w:2400,h:30 }, { x:0,y:1160,w:2400,h:30 }, { x:60,y:0,w:30,h:2400 }, { x:450,y:0,w:30,h:2400 }, { x:850,y:0,w:30,h:2400 } ];
-    roads.forEach(r => {
-        const d = document.createElement('div'); d.className = r.w > r.h ? 'road-h' : 'road-v';
-        d.style.cssText = `left:${r.x}px;top:${r.y}px;width:${r.w}px;height:${r.h}px;pointer-events:none`; mapEl.appendChild(d);
-    });
-    
-    P.cityBuildings.forEach(b => {
-        const t = Catalog.find(x => x.id === b.tid);
-        if (!t) return;
-        const d = document.createElement('div');
-        d.className = `building ${t.cls}`;
-        d.style.cssText = `left:${b.x}px;top:${b.y}px;width:${t.w}px;height:${t.h}px`;
-        
-        let incStr = '';
-        if(b.accInc > 0) incStr = `<div class="building-income-float">💰</div>`;
-        
-        d.innerHTML = `
-            <div class="building-icon">${t.icon}</div>
-            <div class="building-name">${t.name}</div>
-            <div class="building-level-badge">LV${b.lvl || 1}</div>
-            ${incStr}`;
-        
-        d.onclick = (e) => {
-            if(!placingTemplate && !hasMoved) openBM(b.uid);
-            e.stopPropagation();
-        };
-        mapEl.appendChild(d);
-    });
-}
-
-function openBM(uid) {
-    const b = P.cityBuildings.find(x => x.uid === uid);
-    if (!b) return;
-    const t = Catalog.find(x => x.id === b.tid);
-    if (!t) return;
-    
-    const inc = calcBInc(b, t);
-    const uc = Math.floor(t.cost * (b.lvl || 1) * 0.5);
-    
-    let upgradesHTML = '';
-    if (t.isBiz) {
-        upgradesHTML = `<div style="margin-top:15px;border-top:1px solid rgba(255,255,255,0.05);padding-top:15px">
-            <div style="font-size:11px;color:#888;margin-bottom:10px;font-weight:700">ПОКРАЩЕННЯ БІЗНЕСУ</div>` + 
-            Object.entries(bizUp).map(([id, up]) => {
-                const ow = (b.upg || []).includes(id); const af = P.balance >= up.price;
-                return `<button class="modal-upgrade-btn" ${(ow || !af) ? 'disabled' : ''} onclick="buyBizUp('${uid}','${id}')">
-                    <span class="upgrade-label">${up.icon} ${up.name} ${ow ? '✅' : ''}</span>
-                    <span>${ow ? '' : `<span class="upgrade-price">${up.price}</span>`} <span style="color:#666">${up.desc}</span></span>
-                </button>`;
-            }).join('') + `</div>`;
-    }
-
-    $('bld-modal-c').innerHTML = `<div class="bm-header">
-        <div class="bm-header-icon ${t.cls}">${t.icon}</div>
-        <div style="flex:1">
-            <div class="bm-header-name">${t.name} <span style="font-size:14px;color:#FFD700;margin-left:5px">LVL ${b.lvl}</span></div>
-            <div class="bm-header-type">${cats[t.cat]}</div>
-        </div>
-        <button class="modal-close" onclick="$('bld-modal').classList.remove('open')">✕</button>
-    </div>
-    <div class="bm-body">
-        <div class="bm-stats">
-            <div class="bm-stat"><div class="bm-stat-label">ДОХІД</div><div class="bm-stat-value" style="color:#4CAF50">${inc}</div></div>
-            <div class="bm-stat"><div class="bm-stat-label">В касі</div><div class="bm-stat-value" style="color:#FFD700">${b.accInc || 0}</div></div>
-            <div class="bm-stat"><div class="bm-stat-label">Зароблено</div><div class="bm-stat-value" style="color:#42A5F5">${b.totalEarned || 0}</div></div>
-        </div>
-        <div class="bm-actions">
-            <button class="bm-action-btn collect" onclick="colInc('${uid}')" ${(b.accInc || 0) <= 0 ? 'disabled' : ''}>
-                <span class="bm-action-left">💰 Зібрати прибуток</span><span class="bm-action-price">${(b.accInc || 0).toLocaleString()}</span>
-            </button>
-            <button class="bm-action-btn upgrade" onclick="upgBld('${uid}')" ${P.balance < uc ? 'disabled' : ''}>
-                <span class="bm-action-left">⬆️ Рівень ${(b.lvl || 1) + 1}</span><span class="bm-action-price">${uc.toLocaleString()}</span>
-            </button>
-            <button class="bm-action-btn sell" onclick="sellBld('${uid}')">
-                <span class="bm-action-left">🗑️ Знести (Поверне +${Math.floor(t.cost * 0.5)})</span>
-            </button>
-        </div>
-        ${upgradesHTML}
-    </div>`;
-    
-    $('bld-modal').classList.add('open');
-}
-
-function buyBizUp(uid, upId) {
-    const b = P.cityBuildings.find(x => x.uid === uid);
-    const up = bizUp[upId];
-    if (!b || !up || (b.upg || []).includes(upId) || P.balance < up.price) return;
-    P.balance -= up.price;
-    if (!b.upg) b.upg = []; b.upg.push(upId);
-    save(); playCash(); toast('🔧', `<strong>${up.name}</strong> встановлено!`); openBM(uid);
-}
-
-function colInc(uid) {
-    const b = P.cityBuildings.find(x => x.uid === uid);
-    if (!b || (b.accInc || 0) <= 0) return;
-    P.balance += b.accInc;
-    toast('💰', `+${b.accInc.toLocaleString()} зібрано!`);
-    b.accInc = 0; save(); playCash(); openBM(uid); buildCity();
-}
-
-function upgBld(uid) {
-    const b = P.cityBuildings.find(x => x.uid === uid); const t = Catalog.find(x => x.id === b.tid);
-    if (!b || !t) return;
-    const uc = Math.floor(t.cost * (b.lvl || 1) * 0.5);
-    if (P.balance < uc) return;
-    P.balance -= uc; b.lvl = (b.lvl || 1) + 1;
-    save(); playCash(); toast('⬆️', `Рівень підвищено!`); openBM(uid); buildCity();
-}
-
-function sellBld(uid) {
-    const b = P.cityBuildings.find(x => x.uid === uid); const t = Catalog.find(x => x.id === b.tid);
-    if (!b || !t) return;
-    if (!confirm('Видалити будівлю?')) return;
-    P.balance += Math.floor(t.cost * 0.5);
-    P.cityBuildings = P.cityBuildings.filter(x => x.uid !== uid);
-    save(); toast('🗑️', `Будівлю знесено.`); $('bld-modal').classList.remove('open'); buildCity();
-}
-
-function startLoops() {
-    setInterval(() => {
-        let e = 0;
-        P.cityBuildings.forEach(b => {
-            const t = Catalog.find(x => x.id === b.tid);
-            if (!t) return;
-            const inc = calcBInc(b, t);
-            b.accInc = (b.accInc || 0) + inc;
-            b.totalEarned = (b.totalEarned || 0) + inc;
-            e += inc;
+    (function() {
+        const items = document.querySelectorAll('.faq-item');
+        items.forEach((item, idx) => {
+            const q = item.querySelector('.faq-q');
+            q.addEventListener('click', function() {
+                const wasOpen = item.classList.contains('open');
+                // закрываем все
+                items.forEach(el => el.classList.remove('open'));
+                // если был закрыт — открываем этот
+                if (!wasOpen) item.classList.add('open');
+            });
         });
-        
-        P.xp += 10;
-        if (P.xp >= P.level * 1000) {
-            P.level++; P.xp -= P.level * 1000;
-            setTimeout(() => toast('🎊', `LVL ${P.level}!`), 500);
-        }
-        
-        save(); buildCity(); // Оновлення значків прибутку
-    }, 10000);
-}
-
-const dailyRewards = [ { day: 1, icon: '🪙', amount: 100 }, { day: 2, icon: '💰', amount: 250 }, { day: 3, icon: '💎', amount: 500 }, { day: 4, icon: '🎁', amount: 1000 }, { day: 5, icon: '👑', amount: 2500 }, { day: 6, icon: '🏆', amount: 5000 }, { day: 7, icon: '🌟', amount: 10000 } ];
-
-function updateDaily() {
-    if (!P.daily) P.daily = { streak: 0, lastClaim: 0 };
-    const now = new Date(), today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
-    const lastClaim = P.daily.lastClaim || 0, lastDay = new Date(lastClaim);
-    const lastDayStart = new Date(lastDay.getFullYear(), lastDay.getMonth(), lastDay.getDate()).getTime();
-    const diff = (today - lastDayStart) / (1000 * 60 * 60 * 24);
-    
-    if (diff > 1 && P.daily.streak > 0) { P.daily.streak = 0; save(); }
-    const canClaim = diff >= 1 || lastClaim === 0;
-    const streak = P.daily.streak || 0;
-    
-    let html = '';
-    for (let i = 0; i < 7; i++) {
-        const r = dailyRewards[i]; let cls = 'locked';
-        if (i < streak) cls = 'claimed'; else if (i === streak && canClaim) cls = 'current';
-        html += `<div class="daily-day ${cls}"><div class="daily-day-num">ДЕНЬ ${r.day}</div><div class="daily-day-icon">${r.icon}</div><div class="daily-day-amount">${r.amount}</div></div>`;
-    }
-    $('daily-streak').innerHTML = html;
-    
-    if (canClaim && streak < 7) {
-        $('daily-btn').className = 'daily-btn available'; $('daily-btn').innerText = `🎁 Забрати ${dailyRewards[streak].amount} LGX`; $('daily-btn').disabled = false;
-    } else {
-        $('daily-btn').className = 'daily-btn claimed-btn'; $('daily-btn').innerText = streak >= 7 ? '✅ Всі зібрано' : '✅ Забрано'; $('daily-btn').disabled = true;
-    }
-}
-
-function claimDaily() {
-    if (!P.daily) P.daily = { streak: 0, lastClaim: 0 };
-    const streak = P.daily.streak || 0; if (streak >= 7) return;
-    const reward = dailyRewards[streak];
-    P.balance += reward.amount; P.daily.streak = streak + 1; P.daily.lastClaim = Date.now();
-    save(); playCash(); toast('🎁', `+${reward.amount} LGX`); updateDaily();
-}
-
-function startTimeTracker() {
-    setInterval(() => {
-        const totalSec = (P.totalTime || 0) + Math.floor((Date.now() - sessionStart) / 1000);
-        const h = Math.floor(totalSec / 3600), m = Math.floor((totalSec % 3600) / 60), s = totalSec % 60;
-        $('time-total').innerText = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-        const sessSec = Math.floor((Date.now() - sessionStart) / 1000);
-        const sm = Math.floor(sessSec / 60), ss = sessSec % 60;
-        $('time-session').innerText = `${String(sm).padStart(2, '0')}:${String(ss).padStart(2, '0')}`;
-    }, 1000);
-}
-
-function spin(type, price) {
-    if (spinning) return;
-    if (type === 'blue' && P.level < 3) return toast('🔒', 'Потрібен LVL 3');
-    if (type === 'red' && !hasEliteAccess()) return toast('🔒', 'Потрібно 3 офіси');
-    if (P.balance < price) return toast('💰', 'Недостатньо!');
-    
-    initAudio(); P.balance -= price; P.opened++; save();
-    
-    spinning = true; const wm = $('win-message'); wm.innerText = ''; wm.classList.remove('win-animated');
-    const win = getCar(type); let html = '';
-    
-    for (let i = 0; i < 60; i++) {
-        if (i === 45) html += cardH(win.car, win.tier);
-        else { const r = getCar(type); html += cardH(r.car, r.tier); }
-    }
-    
-    const t = $('track'); t.innerHTML = html; t.style.transition = 'none'; t.style.transform = 'translateX(0)';
-    const tx = -((45 * 192) - 460 + 96 + (Math.random() - 0.5) * 192 * 0.6);
-    const dur = 6000; let last = -1; const st = performance.now();
-    
-    function tk() {
-        if (!spinning) return; const el = performance.now() - st; const p = Math.min(el / dur, 1);
-        const e = 1 - Math.pow(1 - p, 3); const cx = tx * e; const ci = Math.floor(Math.abs(cx) / 192);
-        if (ci !== last) { last = ci; playTick(600 + (1 - p) * 600, 0.02 + p * 0.03); }
-        if (p < 1) requestAnimationFrame(tk);
-    }
-    
-    requestAnimationFrame(() => requestAnimationFrame(() => { t.style.transition = `transform ${dur}ms cubic-bezier(0.15,0.85,0.2,1)`; t.style.transform = `translateX(${tx}px)`; }));
-    
-    setTimeout(() => {
-        spinning = false; const cards = t.querySelectorAll('.car-card'); if (cards[45]) cards[45].classList.add('winner');
-        playWin(); const profit = win.car.price; P.balance += profit; P.xp += 100;
-        if (P.xp >= P.level * 1000) { P.level++; P.xp -= P.level * 1000; setTimeout(() => toast('🎊', `LVL ${P.level}!`), 500); }
-        wm.innerHTML = `🎉 <span style="color:${tierC(win.tier)}">${win.car.name}</span> +${profit.toLocaleString()}`;
-        wm.style.color = tierC(win.tier); wm.classList.add('win-animated'); save();
-    }, dur + 300);
-}
-
-function getCar(t) {
-    let p = ['yellow']; if (t === 'green') p = ['green', 'yellow']; if (t === 'blue') p = ['blue', 'green']; if (t === 'red') p = ['red', 'blue'];
-    const tier = p[~~(Math.random() * p.length)]; return { car: carDB[tier][~~(Math.random() * carDB[tier].length)], tier };
-}
-function cardH(c, t) { const tierNames = { yellow: 'BASIC', green: 'STANDARD', blue: 'PREMIUM', red: 'ELITE' }; return `<div class="car-card rarity-${t}"><img src="${c.img}" loading="lazy"><div class="car-name">${c.name}</div><div class="car-rarity-label ${t}">${tierNames[t]}</div><div class="car-price ${t}">${c.price.toLocaleString()} LGX</div></div>`; }
-function tierC(t) { return { yellow: '#FFD700', green: '#4CAF50', blue: '#2196F3', red: '#EF5350' }[t]; }
-function toast(i, t) { const c = $('toast-container'); const d = document.createElement('div'); d.className = 'toast'; d.innerHTML = `<span class="toast-icon">${i}</span><span class="toast-text">${t}</span>`; c.appendChild(d); setTimeout(() => d.remove(), 3100); }
-function openSettings() { $('settings-overlay').classList.add('open'); }
-function closeSettings() { $('settings-overlay').classList.remove('open'); }
-$('settings-overlay').addEventListener('click', function(e) { if (e.target === this) closeSettings(); });
-function chkDev() { if ($('dev-pw').value === '1122') { $('dev-auth').classList.remove('open'); $('dev-con').classList.add('open'); $('dev-st').innerText = ''; } else { $('dev-err').innerText = '❌'; $('dev-pw').value = ''; } }
-$('dev-pw').addEventListener('keydown', e => { if (e.key === 'Enter') chkDev(); });
-function dS(m) { $('dev-st').innerText = m; setTimeout(() => $('dev-st').innerText = '', 2500); }
+        // открыть первый
+        if (items.length) items[0].classList.add('open');
+    })();
 </script>
+
 </body>
 </html>
