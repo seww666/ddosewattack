@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>StarCorp · SeWa666 — iOS style</title>
+    <title>StarCorp · SeWa666 — GitHub Files</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -24,7 +24,6 @@
             position: relative;
         }
 
-        /* iOS-подібний градієнтний фон */
         body::before {
             content: '';
             position: fixed;
@@ -37,7 +36,6 @@
             z-index: 0;
         }
 
-        /* iOS-стиль glassmorphism — легке матове скло з тонкою рамкою */
         .glass-window {
             flex: 1 1 380px;
             min-width: 300px;
@@ -59,7 +57,6 @@
             overflow: hidden;
         }
 
-        /* iOS-блиск на склі */
         .glass-window::before {
             content: '';
             position: absolute;
@@ -72,12 +69,6 @@
             border-radius: 50%;
         }
 
-        .glass-window:hover {
-            border-color: rgba(255, 255, 255, 0.05);
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9), inset 0 0.5px 0 rgba(255, 255, 255, 0.05);
-        }
-
-        /* контейнер для двох вікон — iOS-style spacing */
         .twin-container {
             max-width: 1100px;
             width: 100%;
@@ -90,7 +81,6 @@
             z-index: 1;
         }
 
-        /* iOS-заголовки — великі, жирні, з тонким градієнтом */
         .window-header {
             display: flex;
             align-items: center;
@@ -123,7 +113,6 @@
             border: 1px solid rgba(255, 255, 255, 0.01);
         }
 
-        /* iOS-бейджі — маленькі, округлі, матові */
         .status-badge {
             font-size: 0.6rem;
             font-weight: 500;
@@ -142,11 +131,6 @@
             font-size: 0.55rem;
         }
 
-        .status-badge i {
-            font-size: 0.45rem;
-        }
-
-        /* iOS-форма — чиста, мінімалістична */
         .login-form {
             display: flex;
             flex-direction: column;
@@ -176,7 +160,6 @@
             opacity: 0.2;
         }
 
-        /* iOS-стиль інпутів — округлі, з внутрішньою тінню */
         .field input {
             background: rgba(255, 255, 255, 0.01);
             border: 1px solid rgba(255, 255, 255, 0.02);
@@ -197,12 +180,6 @@
             box-shadow: 0 0 30px rgba(60, 140, 255, 0.02), inset 0 1px 4px rgba(0, 0, 0, 0.5);
         }
 
-        .field input::placeholder {
-            color: rgba(255, 255, 255, 0.02);
-            font-weight: 300;
-        }
-
-        /* iOS-кнопка — стильна, з ледь помітним градієнтом */
         .login-btn {
             background: rgba(255, 255, 255, 0.01);
             border: 1px solid rgba(255, 255, 255, 0.02);
@@ -251,7 +228,6 @@
             transform: scale(0.97);
         }
 
-        /* iOS-статус авторизації — мініатюрний індикатор */
         .auth-status {
             font-size: 0.65rem;
             font-weight: 400;
@@ -284,7 +260,6 @@
             box-shadow: 0 0 20px rgba(255, 70, 70, 0.05);
         }
 
-        /* iOS-сітка — дві колонки з великими картками */
         .download-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -294,6 +269,7 @@
             align-content: start;
             position: relative;
             z-index: 2;
+            min-height: 200px;
         }
 
         .glass-item {
@@ -309,6 +285,8 @@
             flex-direction: column;
             align-items: center;
             gap: 0.4rem;
+            min-height: 120px;
+            justify-content: center;
         }
 
         .glass-item:hover {
@@ -326,6 +304,8 @@
             background: rgba(255,255,255,0.005);
             padding: 0.2rem 0.8rem;
             border-radius: 40px;
+            word-break: break-all;
+            max-width: 100%;
         }
 
         .item-name i {
@@ -333,7 +313,6 @@
             opacity: 0.15;
         }
 
-        /* iOS-стиль кнопок скачування — мінімалістичні */
         .download-btn {
             background: rgba(255, 255, 255, 0.005);
             border: 1px solid rgba(255, 255, 255, 0.005);
@@ -392,7 +371,6 @@
             margin-top: 2px;
         }
 
-        /* iOS-футер — тонкий, ледь помітний */
         .window-footer {
             margin-top: 1.8rem;
             padding-top: 1rem;
@@ -413,12 +391,6 @@
             border-radius: 60px;
         }
 
-        .window-footer i {
-            margin-right: 4px;
-            opacity: 0.1;
-        }
-
-        /* iOS-вотермарк — дуже тонкий */
         .watermark {
             position: absolute;
             bottom: 1.4rem;
@@ -431,7 +403,6 @@
             font-weight: 300;
         }
 
-        /* iOS-тост — гладкий, з великим радіусом */
         .ios-toast {
             position: fixed;
             bottom: 44px;
@@ -469,7 +440,21 @@
             font-size: 1rem;
         }
 
-        /* адаптив для iOS */
+        .loading-spinner {
+            color: rgba(255, 255, 255, 0.05);
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .loading-spinner i {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.05);
+        }
+
         @media (max-width: 820px) {
             .twin-container { gap: 1.8rem; }
             .glass-window { 
@@ -487,9 +472,8 @@
             }
             .window-header h2 { font-size: 1.4rem; }
             .download-grid { gap: 0.6rem; }
-            .glass-item { padding: 1rem 0.2rem; border-radius: 20px; }
+            .glass-item { padding: 1rem 0.2rem; border-radius: 20px; min-height: 90px; }
             .login-btn { padding: 0.8rem 1.2rem; }
-            .window-header { margin-bottom: 1.6rem; }
         }
     </style>
 </head>
@@ -497,7 +481,7 @@
 
 <div class="twin-container">
 
-    <!-- ===== ВІКНО 1: ЛОГІН (iOS стиль) ===== -->
+    <!-- ВІКНО 1: ЛОГІН -->
     <div class="glass-window" id="loginWindow">
         <div class="window-header">
             <h2><i class="fas fa-crown"></i> SeWa<span style="font-weight:300;">·</span>вхід</h2>
@@ -530,7 +514,7 @@
         <div class="watermark">✦ SEWA ✦</div>
     </div>
 
-    <!-- ===== ВІКНО 2: ЗАВАНТАЖЕННЯ (iOS стиль) ===== -->
+    <!-- ВІКНО 2: ЗАВАНТАЖЕННЯ (файли з GitHub) -->
     <div class="glass-window" id="downloadWindow">
         <div class="window-header">
             <h2><i class="fas fa-cloud-arrow-down"></i> TToren-<span style="font-weight:300;">SeWa</span></h2>
@@ -538,30 +522,15 @@
         </div>
 
         <div class="download-grid" id="downloadGrid">
-            <div class="glass-item" data-file="Model-1">
-                <div class="item-name"><i class="fas fa-cube"></i> Model-1</div>
-                <div class="download-btn locked" data-file="Model-1"><i class="fas fa-download"></i> Скачати</div>
-                <div class="model-tag">v1.0</div>
-            </div>
-            <div class="glass-item" data-file="Model-2">
-                <div class="item-name"><i class="fas fa-cubes"></i> Model-2</div>
-                <div class="download-btn locked" data-file="Model-2"><i class="fas fa-download"></i> Скачати</div>
-                <div class="model-tag">v2.3</div>
-            </div>
-            <div class="glass-item" data-file="BlockOP-1">
-                <div class="item-name"><i class="fas fa-layer-group"></i> BlockOP-1</div>
-                <div class="download-btn locked" data-file="BlockOP-1"><i class="fas fa-download"></i> Скачати</div>
-                <div class="model-tag">OP-1</div>
-            </div>
-            <div class="glass-item" data-file="Scan-m1">
-                <div class="item-name"><i class="fas fa-qrcode"></i> Scan-m1</div>
-                <div class="download-btn locked" data-file="Scan-m1"><i class="fas fa-download"></i> Скачати</div>
-                <div class="model-tag">m1</div>
+            <!-- Тут будуть файли з GitHub -->
+            <div class="loading-spinner" id="loadingIndicator">
+                <i class="fas fa-spinner fa-pulse"></i>
+                <span>Завантаження файлів...</span>
             </div>
         </div>
 
         <div style="display: flex; justify-content: flex-end; margin-top: 0.1rem; font-size: 0.45rem; color: rgba(255,255,255,0.01); letter-spacing: 3px; position: relative; z-index:2;">
-            <span># TToren-SeWa</span>
+            <span id="repoInfo"># GitHub</span>
         </div>
 
         <div class="window-footer">
@@ -580,6 +549,23 @@
 
 <script>
     (function() {
+        // =============================================
+        // 🔧 НАЛАШТУВАННЯ GitHub
+        // Замініть ці значення на свої:
+        // =============================================
+        const GITHUB_USERNAME = 'your-username';      // Ваш username на GitHub
+        const GITHUB_REPO = 'your-repo';              // Назва репозиторію
+        const GITHUB_BRANCH = 'main';                 // Гілка (main / master)
+        const GITHUB_PATH = '';                       // Шлях до папки (напр. 'files/' або '' для кореня)
+
+        // АБО використовуйте готовий тестовий репозиторій (розкоментуйте нижче):
+        // const GITHUB_USERNAME = 'octocat';
+        // const GITHUB_REPO = 'Hello-World';
+        // const GITHUB_BRANCH = 'master';
+        // const GITHUB_PATH = '';
+
+        // =============================================
+
         // Елементи
         const loginBtn = document.getElementById('loginBtn');
         const loginField = document.getElementById('loginField');
@@ -587,14 +573,17 @@
         const statusDot = document.getElementById('statusDot');
         const statusText = document.getElementById('statusText');
         const downloadStatusBadge = document.getElementById('downloadStatusBadge');
-        const downloadBtns = document.querySelectorAll('.download-btn');
-        const toast = document.getElementById('iosToast');
-        const toastMsg = document.getElementById('toastMessage');
+        const downloadGrid = document.getElementById('downloadGrid');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const repoInfo = document.getElementById('repoInfo');
 
         let isAuthorized = false;
+        let fileItems = []; // збереження файлів
 
-        // Функція показу iOS-тосту
+        // Функція показу тосту
         function showToast(message, type = 'success') {
+            const toast = document.getElementById('iosToast');
+            const toastMsg = document.getElementById('toastMessage');
             const icon = toast.querySelector('i');
             if (type === 'success') {
                 icon.className = 'fas fa-circle-check';
@@ -617,7 +606,7 @@
             }, 3200);
         }
 
-        // Оновлення UI
+        // Оновлення UI авторизації
         function updateUI(authState) {
             isAuthorized = authState;
 
@@ -626,25 +615,189 @@
                 statusText.textContent = 'авторизовано ✓';
                 downloadStatusBadge.innerHTML = '<i class="fas fa-check-circle" style="color: #5dffa0;"></i> відкрито';
                 downloadStatusBadge.style.color = 'rgba(255,255,255,0.15)';
+                // Активувати кнопки
+                document.querySelectorAll('.download-btn').forEach(btn => {
+                    btn.classList.remove('locked');
+                    btn.classList.add('active');
+                });
             } else {
                 statusDot.className = 'dot red';
                 statusText.textContent = 'помилка входу';
                 downloadStatusBadge.innerHTML = '<i class="fas fa-lock"></i> заблок.';
                 downloadStatusBadge.style.color = 'rgba(255,255,255,0.05)';
-            }
-
-            downloadBtns.forEach(btn => {
-                if (authState) {
-                    btn.classList.remove('locked');
-                    btn.classList.add('active');
-                } else {
+                document.querySelectorAll('.download-btn').forEach(btn => {
                     btn.classList.add('locked');
                     btn.classList.remove('active');
+                });
+            }
+        }
+
+        // ========== ОТРИМАННЯ ФАЙЛІВ З GITHUB ==========
+        async function fetchGitHubFiles() {
+            try {
+                // Перевірка чи налаштовано
+                if (GITHUB_USERNAME === 'your-username' || GITHUB_REPO === 'your-repo') {
+                    // Показуємо демо-файли якщо не налаштовано
+                    showDemoFiles();
+                    repoInfo.textContent = '# демо-режим (налаштуй GitHub)';
+                    return;
                 }
+
+                const url = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${GITHUB_PATH}?ref=${GITHUB_BRANCH}`;
+                const response = await fetch(url);
+
+                if (!response.ok) {
+                    throw new Error(`GitHub API: ${response.status} ${response.statusText}`);
+                }
+
+                const data = await response.json();
+
+                // Фільтруємо тільки файли (не папки)
+                const files = data.filter(item => item.type === 'file');
+
+                if (files.length === 0) {
+                    showToast('⚠️ Файлів у репозиторії не знайдено', 'error');
+                    downloadGrid.innerHTML = `
+                        <div style="grid-column: 1/-1; text-align:center; padding:2rem; color:rgba(255,255,255,0.05);">
+                            <i class="fas fa-folder-open" style="font-size:2rem; display:block; margin-bottom:0.5rem;"></i>
+                            Немає файлів у репозиторії
+                        </div>
+                    `;
+                    return;
+                }
+
+                repoInfo.textContent = `# ${GITHUB_USERNAME}/${GITHUB_REPO} (${files.length} файлів)`;
+                renderFiles(files);
+
+            } catch (error) {
+                console.error('GitHub fetch error:', error);
+                showToast('❌ Помилка завантаження файлів з GitHub', 'error');
+                // Показуємо демо-файли при помилці
+                showDemoFiles();
+                repoInfo.textContent = '# помилка GitHub → демо-режим';
+            }
+        }
+
+        // Рендеринг файлів у сітку
+        function renderFiles(files) {
+            // Зберігаємо файли для подальшого використання
+            fileItems = files;
+
+            // Очищуємо сітку, прибираємо індикатор завантаження
+            downloadGrid.innerHTML = '';
+
+            files.forEach((file, index) => {
+                const item = document.createElement('div');
+                item.className = 'glass-item';
+                item.dataset.file = file.name;
+
+                // Визначаємо іконку за розширенням
+                let icon = 'fa-file';
+                const ext = file.name.split('.').pop().toLowerCase();
+                if (['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp'].includes(ext)) icon = 'fa-file-image';
+                else if (['mp4', 'webm', 'mov'].includes(ext)) icon = 'fa-file-video';
+                else if (['mp3', 'wav', 'flac'].includes(ext)) icon = 'fa-file-audio';
+                else if (['zip', 'rar', '7z', 'tar', 'gz'].includes(ext)) icon = 'fa-file-zipper';
+                else if (['pdf'].includes(ext)) icon = 'fa-file-pdf';
+                else if (['doc', 'docx'].includes(ext)) icon = 'fa-file-word';
+                else if (['xls', 'xlsx'].includes(ext)) icon = 'fa-file-excel';
+                else if (['js', 'ts', 'jsx', 'tsx'].includes(ext)) icon = 'fa-file-code';
+                else if (['html', 'htm'].includes(ext)) icon = 'fa-file-code';
+                else if (['css', 'scss', 'sass'].includes(ext)) icon = 'fa-file-code';
+                else if (['py', 'java', 'c', 'cpp', 'go', 'rs'].includes(ext)) icon = 'fa-file-code';
+                else if (['json', 'xml', 'yaml', 'yml'].includes(ext)) icon = 'fa-file-code';
+                else if (['txt', 'md'].includes(ext)) icon = 'fa-file-lines';
+
+                const sizeKB = (file.size / 1024).toFixed(1);
+                const sizeStr = file.size > 1024*1024 ? (file.size / (1024*1024)).toFixed(1) + ' MB' : sizeKB + ' KB';
+
+                item.innerHTML = `
+                    <div class="item-name"><i class="fas ${icon}"></i> ${file.name}</div>
+                    <div class="download-btn locked" data-file="${file.name}" data-url="${file.download_url}">
+                        <i class="fas fa-download"></i> Скачати
+                    </div>
+                    <div class="model-tag">${sizeStr}</div>
+                `;
+
+                downloadGrid.appendChild(item);
+            });
+
+            // Після рендерингу — оновлюємо стан кнопок
+            updateUI(isAuthorized);
+
+            // Додаємо обробники для кнопок скачування
+            document.querySelectorAll('.download-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (!isAuthorized) {
+                        showToast('🔒 Спочатку увійдіть в акаунт (SeWa / 123123)', 'error');
+                        return;
+                    }
+                    const fileName = this.dataset.file || 'файл';
+                    const fileUrl = this.dataset.url;
+                    
+                    if (fileUrl) {
+                        // Скачуємо файл з GitHub
+                        window.open(fileUrl, '_blank');
+                        showToast(`⬇️ Завантаження ${fileName} ...`, 'info');
+                    } else {
+                        showToast(`⚠️ Не вдалося завантажити ${fileName}`, 'error');
+                    }
+                });
             });
         }
 
-        // Обробка логіну
+        // Демо-файли (якщо GitHub не налаштовано або помилка)
+        function showDemoFiles() {
+            const demoFiles = [
+                { name: 'Model-1.bin', size: 2048, download_url: '#' },
+                { name: 'Model-2.bin', size: 4096, download_url: '#' },
+                { name: 'BlockOP-1.bin', size: 1024, download_url: '#' },
+                { name: 'Scan-m1.bin', size: 512, download_url: '#' },
+            ];
+            
+            downloadGrid.innerHTML = '';
+            
+            demoFiles.forEach((file) => {
+                const item = document.createElement('div');
+                item.className = 'glass-item';
+                item.dataset.file = file.name;
+                
+                const ext = file.name.split('.').pop().toLowerCase();
+                let icon = 'fa-file';
+                if (['bin', 'dat'].includes(ext)) icon = 'fa-cube';
+                
+                const sizeStr = (file.size / 1024).toFixed(1) + ' KB';
+                
+                item.innerHTML = `
+                    <div class="item-name"><i class="fas ${icon}"></i> ${file.name}</div>
+                    <div class="download-btn locked" data-file="${file.name}" data-url="${file.download_url}">
+                        <i class="fas fa-download"></i> Скачати
+                    </div>
+                    <div class="model-tag">${sizeStr}</div>
+                `;
+                
+                downloadGrid.appendChild(item);
+            });
+            
+            // Оновлюємо стан кнопок
+            document.querySelectorAll('.download-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (!isAuthorized) {
+                        showToast('🔒 Спочатку увійдіть в акаунт (SeWa / 123123)', 'error');
+                        return;
+                    }
+                    const fileName = this.dataset.file || 'файл';
+                    showToast(`⬇️ Демо-завантаження ${fileName} (налаштуйте GitHub)`, 'info');
+                });
+            });
+            
+            updateUI(isAuthorized);
+            repoInfo.textContent = '# демо-режим (налаштуй GitHub)';
+        }
+
+        // ========== ОБРОБКА ЛОГІНУ ==========
         function handleLogin() {
             const loginVal = loginField.value.trim();
             const passVal = passField.value.trim();
@@ -655,7 +808,6 @@
             } else {
                 updateUI(false);
                 showToast('❌ Невірний логін або пароль. Спробуйте SeWa / 123123', 'error');
-                // iOS-ефект легкого підсвічування
                 loginField.style.borderColor = 'rgba(255,80,80,0.06)';
                 passField.style.borderColor = 'rgba(255,80,80,0.06)';
                 setTimeout(() => {
@@ -665,7 +817,7 @@
             }
         }
 
-        // Події
+        // ========== ПОДІЇ ==========
         loginBtn.addEventListener('click', function(e) {
             e.preventDefault();
             handleLogin();
@@ -680,27 +832,15 @@
             });
         });
 
-        downloadBtns.forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                if (!isAuthorized) {
-                    showToast('🔒 Спочатку увійдіть в акаунт (SeWa / 123123)', 'error');
-                    return;
-                }
-                const parentItem = this.closest('.glass-item');
-                let fileName = 'файл';
-                if (parentItem) {
-                    const nameEl = parentItem.querySelector('.item-name');
-                    if (nameEl) fileName = nameEl.innerText.trim();
-                }
-                showToast(`⬇️ Завантаження ${fileName} ...`, 'info');
-            });
-        });
-
-        // Стартовий стан — заблоковано
+        // ========== ЗАПУСК ==========
+        // Стартовий стан
         updateUI(false);
 
-        console.log('✨ StarCorp SeWa666 · iOS-стиль');
+        // Завантажуємо файли з GitHub
+        fetchGitHubFiles();
+
+        console.log('✨ StarCorp SeWa666 · GitHub Files · iOS-стиль');
+        console.log(`📁 Репозиторій: ${GITHUB_USERNAME}/${GITHUB_REPO}`);
     })();
 </script>
 </body>
